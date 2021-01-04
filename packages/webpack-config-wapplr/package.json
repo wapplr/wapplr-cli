@@ -1,0 +1,35 @@
+{
+    "name": "webpack-config-wapplr",
+    "description": "The default Webpack config for Wapplr structure",
+    "license": "MIT",
+    "dependencies": {
+        "babel-preset-wapplr": "1.0.0",
+        "postcss-config-wapplr": "1.0.0",
+        "babel-loader": "^8.1.0",
+        "babel-plugin-module-resolver": "^4.1.0",
+
+        "webpack": "^5.4.0",
+        "webpack-assets-manifest": "^3.1.1",
+        "webpack-hot-middleware": "^2.25.0",
+        "webpack-node-externals": "^2.5.2",
+        "terser-webpack-plugin": "^5.0.3",
+        "loader-utils": "^2.0.0",
+
+        "json5-loader": "^4.0.1",
+        "image-minimizer-webpack-plugin": "^1.0.0",
+        "imagemin-webp": "^6.0.0",
+        "style-loader": "^2.0.0",
+        "css-loader": "^5.0.1",
+        "postcss-loader": "^4.0.4",
+        "file-loader": "^6.2.0"
+    },
+    "engines": {
+        "node": ">=12.0.0"
+    },
+    "files": [
+        "index.js",
+        "webpackHotDevClient.js"
+    ],
+    "version": "1.0.0",
+    "scripts": {}
+}

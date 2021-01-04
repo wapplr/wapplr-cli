@@ -1,0 +1,12 @@
+#! /usr/bin/env node
+
+const cli = require('./index');
+
+if (require.main === module && process.argv.length > 2) {
+    delete require.cache[__filename];
+    const mod = cli[process.argv[2]];
+    cli.run(mod).catch(err => {
+        console.error(err.stack);
+        process.exit(1);
+    });
+}

@@ -1,0 +1,5 @@
+.someClass {
+    color: red;
+    display: -ms-flexbox;
+    display: flex;
+}

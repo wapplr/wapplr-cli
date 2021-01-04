@@ -1,0 +1,17 @@
+{
+    "name": "babel-plugin-css-to-js-transform",
+    "description": "The transform generate a [filename]_css.js file from [filename].css. It inserts classNames by css-modules, and insert a _getCss function. It is keeps the require or import in the file, only replaces the file name with the new file name.",
+    "license": "MIT",
+    "dependencies": {
+        "css-modules-require-hook": "^4.0.6"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.12.10",
+        "wapplr-cli": "1.0.0"
+    },
+    "main": "dist/index.js",
+    "version": "1.0.0",
+    "scripts": {
+        "babel-plugin build": "babel src/index.js --presets=babel-preset-wapplr/plugin --out-dir dist"
+    }
+}

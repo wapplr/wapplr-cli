@@ -1,0 +1,29 @@
+{
+    "name": "wapplr-template",
+    "description": "It is just a template for wapplr structure",
+    "license": "MIT",
+    "dependencies": {
+        "wapplr": "1.0.0"
+    },
+    "devDependencies": {
+        "wapplr-cli": "1.0.0"
+    },
+    "engines": {
+        "node": ">=12.0.0"
+    },
+    "browserslist": [
+        ">1%",
+        "last 4 versions",
+        "Firefox ESR",
+        "not ie < 9"
+    ],
+    "scripts": {
+        "wapplr-template start": "wapplr-cli start",
+        "wapplr-template build": "wapplr-cli build",
+        "wapplr-template clean": "wapplr-cli clean"
+    },
+    "version": "1.0.0",
+    "files": ["dist/*"],
+    "main": "dist/server",
+    "browser": "dist/client"
+}

@@ -1,0 +1,40 @@
+{
+    "name": "babel-plugin-css-to-js-transform-test",
+    "description": "Test a babel plugin",
+    "license": "MIT",
+    "devDependencies": {
+        "@babel/cli": "^7.12.10",
+        "@babel/core": "^7.12.10",
+        "cssnano": "^4.1.10",
+        "pixrem": "^5.0.0",
+        "pleeease-filters": "^4.0.0",
+        "postcss": "^8.1.7",
+        "postcss-calc": "^7.0.5",
+        "postcss-flexbugs-fixes": "^5.0.1",
+        "postcss-import": "^13.0.0",
+        "postcss-preset-env": "^6.7.0"
+    },
+    "browserslist": [
+        ">1%",
+        "last 4 versions",
+        "Firefox ESR",
+        "not ie < 9"
+    ],
+    "main": "outDir/component.js",
+    "version": "1.0.0",
+    "scripts": {
+        "yarn install": "yarn install",
+        "babel-plugin-css-to-js-transform-test build":              "node ./tools build --src-dir srcDir --out-dir outDir",
+        "babel-plugin-css-to-js-transform-test babel":              "node ./tools clean --out-dir outDir && babel srcDir --presets=babel-preset-for-test --out-dir outDir",
+        "babel-plugin-css-to-js-transform-test babel root file":    "node ./tools clean --out-dir outDir && babel root_test.js --presets=babel-preset-for-test --out-dir outDir",
+        "babel-plugin-css-to-js-transform-test processCss":         "node ./tools clean --out-dir outDir && node ./tools processCss --src-dir srcDir --out-dir outDir",
+        "babel-plugin-css-to-js-transform-test clean":              "node ./tools clean --out-dir outDir"
+    },
+    "private": true,
+    "workspaces": [
+        "packages/*"
+    ],
+    "files": [
+        "/outDir"
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "name": "babel-preset-for-test",
+    "description": "A Babel preset for test",
+    "license": "MIT",
+    "dependencies": {
+        "@babel/core": "^7.12.10",
+        "@babel/polyfill": "^7.12.1",
+        "@babel/preset-env": "^7.12.11"
+    },
+    "files": [
+        "create.js",
+        "index.js"
+    ],
+    "version": "1.0.0"
+}
