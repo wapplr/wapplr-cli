@@ -4,6 +4,7 @@ node_modules/
 wip/
 dist
 run
+!packages/wapplr-cli/wapplr-template/run
 my-package/
 wapplr.json
 .DS_Store
@@ -16,4 +17,3 @@ yarn-error.log*
 .npm/
 yarn.lock
 .editorconfig
-
