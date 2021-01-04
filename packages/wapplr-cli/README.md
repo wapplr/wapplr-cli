@@ -10,29 +10,29 @@ This package includes all helpers package from Wapplr:
 
 ## Installation
 
-```console
+```sh
 npm install --save-dev wapplr-cli
 ```
 
 ## Usage
 
-```console
+```sh
 wapplr-cli create src/my-package
 ```
 
 ## Functions
 
-###create
+### create
 
 This command creates a new Wapplr package with `my-package` name to the `path/to/src` folder:
 
-```console
+```sh
 wapplr-cli create path/to/src/my-package
 ```
 
 This command creates a new Wapplr package with `my-package` name to the current folder.
 
-```console
+```sh
 wapplr-cli create my-package
 ```
 
@@ -41,7 +41,7 @@ wapplr-cli create my-package
 This command create a startable instance inside to the current directory to the `./run` folder from `./src` folder. 
 Then it runs that, and the browser will open.
 
-```console
+```sh
 wapplr-cli start
 ```
 # build
@@ -49,7 +49,7 @@ wapplr-cli start
 This command create a startable instance inside to the current directory to the `./run` folder from `./src` folder.
 And it create a distribution to the `./dist` folder
 
-```console
+```sh
 wapplr-cli build
 ```
 
@@ -57,7 +57,7 @@ wapplr-cli build
 
 This command deletes all files created by wapplr-cli except `wapplr.json`.
 
-```console
+```sh
 wapplr-cli clean
 ```
 

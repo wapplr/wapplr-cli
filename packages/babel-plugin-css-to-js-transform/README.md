@@ -70,7 +70,7 @@ var styles = require("dir/test_require_css.js")["default"];
 
 ## Installation
 
-```console
+```sh
 npm install --save-dev babel-plugin-css-to-js-transform
 ```
 
