@@ -36,7 +36,7 @@ This command creates a new Wapplr package with `my-package` name to the current 
 wapplr-cli create my-package
 ```
 
-# start
+### start
 
 This command create a startable instance inside to the current directory to the `./run` folder from `./src` folder. 
 Then it runs that, and the browser will open.
@@ -44,7 +44,7 @@ Then it runs that, and the browser will open.
 ```sh
 wapplr-cli start
 ```
-# build
+### build
 
 This command create a startable instance inside to the current directory to the `./run` folder from `./src` folder.
 And it create a distribution to the `./dist` folder
@@ -53,7 +53,7 @@ And it create a distribution to the `./dist` folder
 wapplr-cli build
 ```
 
-# clean
+### clean
 
 This command deletes all files created by wapplr-cli except `wapplr.json`.
 
