@@ -3,10 +3,10 @@
     "description": "It is just a template for wapplr structure",
     "license": "MIT",
     "dependencies": {
-        "wapplr": "1.0.0"
+        "wapplr": "^1.0.0"
     },
     "devDependencies": {
-        "wapplr-cli": "1.0.0"
+        "wapplr-cli": "^1.0.0"
     },
     "engines": {
         "node": ">=12.0.0"

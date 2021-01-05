@@ -13,5 +13,10 @@
     "version": "1.0.0",
     "scripts": {
         "babel-plugin build": "babel src/index.js --presets=babel-preset-wapplr/plugin --out-dir dist"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/wapplr/wapplr-cli.git",
+        "directory": "packages/babel-plugin-css-to-js-transform"
     }
 }

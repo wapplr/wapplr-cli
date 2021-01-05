@@ -3,8 +3,8 @@
     "description": "The default Webpack config for Wapplr structure",
     "license": "MIT",
     "dependencies": {
-        "babel-preset-wapplr": "1.0.0",
-        "postcss-config-wapplr": "1.0.0",
+        "babel-preset-wapplr": "^1.0.0",
+        "postcss-config-wapplr": "^1.0.0",
         "babel-loader": "^8.1.0",
         "babel-plugin-module-resolver": "^4.1.0",
 
@@ -28,8 +28,14 @@
     },
     "files": [
         "index.js",
+        "styleLoader.js",
         "webpackHotDevClient.js"
     ],
     "version": "1.0.0",
-    "scripts": {}
+    "scripts": {},
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/wapplr/wapplr-cli.git",
+        "directory": "packages/webpack-config-wapplr"
+    }
 }
