@@ -4,8 +4,12 @@ const cli = require('./index');
 
 if (require.main === module && process.argv.length > 2) {
     delete require.cache[__filename];
-    const mod = cli[process.argv[2]];
-    cli.run(mod).catch(err => {
+    const mod = (process.argv[2] !== "run") ? cli[process.argv[2]] : null;
+    if (!mod){
+        console.log("There is no "+process.argv[2]+" command, please use one of create, clean, build or start command")
+        return null;
+    }
+    cli.run(mod).catch(function (err){
         console.error(err.stack);
         process.exit(1);
     });

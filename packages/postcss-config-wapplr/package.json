@@ -3,7 +3,7 @@
     "description": "The default Postcss config for Wapplr structure",
     "license": "MIT",
     "dependencies": {
-        "postcss": "^8.2.2",
+        "postcss": "^8.2.1",
         "postcss-import": "^13.0.0",
         "postcss-calc": "^7.0.5",
         "pleeease-filters": "^4.0.0",
@@ -19,7 +19,7 @@
         "index.js",
         "plugins.js"
     ],
-    "version": "1.0.2",
+    "version": "1.0.3",
     "scripts": {},
     "repository": {
         "type": "git",

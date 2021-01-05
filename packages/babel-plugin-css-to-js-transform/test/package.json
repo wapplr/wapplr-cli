@@ -8,7 +8,7 @@
         "cssnano": "^4.1.10",
         "pixrem": "^5.0.0",
         "pleeease-filters": "^4.0.0",
-        "postcss": "^8.1.7",
+        "postcss": "^8.2.1",
         "postcss-calc": "^7.0.5",
         "postcss-flexbugs-fixes": "^5.0.1",
         "postcss-import": "^13.0.0",

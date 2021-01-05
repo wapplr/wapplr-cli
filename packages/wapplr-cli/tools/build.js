@@ -37,7 +37,13 @@ module.exports = async function build(p = {}) {
     await createServiceWorker(options)
     await processCss(options);
 
-    const execText = path.resolve(buildToolsPath, "../.bin/babel") + " " + srcPath + " --presets=babel-preset-wapplr/dist --out-dir " + distPath + " --verbose";
+    const babelPath = (fs.existsSync(path.resolve(buildToolsPath, "../.bin/babel"))) ? '"' + path.resolve(buildToolsPath, "../.bin/babel") + '"' :
+        (fs.existsSync(path.resolve(buildToolsPath, "./node_modules/.bin/babel"))) ? '"' + path.resolve(buildToolsPath, "./node_modules/.bin/babel") + '"' :
+            (fs.existsSync(path.resolve(rootPath, "./node_modules/.bin/babel"))) ? '"' + path.resolve(rootPath, "./node_modules/.bin/babel") + '"' : "babel"
+
+    const babelPresetPath = (fs.existsSync(path.resolve(rootPath, "node_modules", "babel-preset-wapplr", "dist.js"))) ? '"' + path.resolve(rootPath, "node_modules", "babel-preset-wapplr", "dist.js") + '"' : "babel-preset-wapplr/dist";
+
+    const execText = babelPath + " " + srcPath + " --presets="+babelPresetPath+" --out-dir " + distPath + " --verbose";
     console.log("\n[WCI]","Run babel: " + execText);
     const {stdout, stderr} = await util.promisify(cp.exec)(execText);
 

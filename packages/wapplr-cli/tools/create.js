@@ -145,12 +145,14 @@ module.exports = async function create(p = {}) {
         }
         if (catchN < 2) {
             console.log("[WAPPLR]","Packages installed")
-            try {
-                const build = require("./build");
-                await build({...options, disableClean: true, disableCreate: true});
-                nextRun = "build";
-            } catch (e){
-                console.log(e)
+            if (options.runScript === "create") {
+                try {
+                    const build = require("./build");
+                    await build({...options, disableClean: true, disableCreate: true});
+                    nextRun = "build";
+                } catch (e) {
+                    console.log(e)
+                }
             }
         }
     }

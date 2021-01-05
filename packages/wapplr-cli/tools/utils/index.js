@@ -70,7 +70,7 @@ function parseOptionsFromArgs() {
 
             if (
                 ((process.argv.indexOf("--root-path") === -1) && fs.existsSync(path.resolve(process.cwd(), process.argv[startArgI + 2]))) ||
-                ((process.argv.indexOf("--root-path") === -1) && options.runScript === "create" && process.argv[startArgI + 2].match("/"))
+                ((process.argv.indexOf("--root-path") === -1) && process.argv[startArgI + 2].split(path.sep)[0])
             ){
                 if (!options.paths) {
                     options.paths = {}
@@ -91,15 +91,10 @@ function parseOptionsFromArgs() {
         process.argv[process.argv.indexOf("--root-path") + 1] &&
         !process.argv[process.argv.indexOf("--root-path") + 1].match("--")
     ){
-        if (
-            (fs.existsSync(path.resolve(process.cwd(), process.argv[process.argv.indexOf("--root-path") + 1]))) ||
-            (options.runScript === "create")
-        ){
-            if (!options.paths) {
-                options.paths = {}
-            }
-            options.paths.rootPath = path.relative(process.cwd(), path.resolve(process.cwd(),  process.argv[process.argv.indexOf("--root-path") + 1]))
+        if (!options.paths) {
+            options.paths = {}
         }
+        options.paths.rootPath = path.relative(process.cwd(), path.resolve(process.cwd(),  process.argv[process.argv.indexOf("--root-path") + 1]))
     }
 
     if (options.paths && options.paths.rootPath && !fs.existsSync(path.resolve(process.cwd(), options.paths.rootPath))){

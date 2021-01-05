@@ -264,7 +264,7 @@ function serverConfig(p = {}) {
                         babelrc: false,
                         configFile: false,
                         presets: [
-                            ["babel-preset-wapplr",
+                            [path.resolve(rootPath, "node_modules", "babel-preset-wapplr"),
                                 {
                                     mode: isDev ? "development" : "production",
                                     react: true,
@@ -453,7 +453,7 @@ function clientConfig(p = {}) {
                         babelrc: false,
                         configFile: false,
                         presets: [
-                            ["babel-preset-wapplr",
+                            [path.resolve(rootPath, "node_modules", "babel-preset-wapplr"),
                                 {
                                     mode: isDev ? "development" : "production",
                                     react: true,
