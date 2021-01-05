@@ -16,10 +16,10 @@ function createManifest(p = {}) {
 
     if (p.return !== "object") {
         if (!fs.existsSync(path.resolve(buildPath))) {
-            fs.mkdirSync(path.resolve(buildPath));
+            fs.mkdirSync(path.resolve(buildPath), { recursive: true });
         }
         if (!fs.existsSync(path.resolve(buildPath, "public"))) {
-            fs.mkdirSync(path.resolve(buildPath, "public"));
+            fs.mkdirSync(path.resolve(buildPath, "public"), { recursive: true });
         }
     }
 
@@ -78,7 +78,7 @@ function createManifest(p = {}) {
                         const srcPaths = iconObject.src.split("/");
                         const folderRelativeFromPublic = srcPaths.slice(0,-1)
                         if (!fs.existsSync(path.resolve(buildPath, "public", ...folderRelativeFromPublic))){
-                            fs.mkdirSync(path.resolve(buildPath, "public", ...folderRelativeFromPublic));
+                            fs.mkdirSync(path.resolve(buildPath, "public", ...folderRelativeFromPublic), { recursive: true });
                         }
 
                         if (!fs.existsSync(path.resolve(buildPath, "public", ...srcPaths)) &&
@@ -113,10 +113,10 @@ function createServiceWorker(p = {}) {
 
     if (p.return !== "string"){
         if (!fs.existsSync(path.resolve(buildPath))) {
-            fs.mkdirSync(path.resolve(buildPath));
+            fs.mkdirSync(path.resolve(buildPath), { recursive: true });
         }
         if (!fs.existsSync(path.resolve(buildPath, "public"))) {
-            fs.mkdirSync(path.resolve(buildPath, "public"));
+            fs.mkdirSync(path.resolve(buildPath, "public"), { recursive: true });
         }
     }
 

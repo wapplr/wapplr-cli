@@ -102,7 +102,7 @@ function parseOptionsFromArgs() {
     }
 
     if (options.paths && options.paths.rootPath && !fs.existsSync(path.resolve(process.cwd(), options.paths.rootPath))){
-        fs.mkdirSync(path.resolve(process.cwd(), options.paths.rootPath))
+        fs.mkdirSync(path.resolve(process.cwd(), options.paths.rootPath), { recursive: true })
     }
 
     if (process.argv.indexOf("--dist-path") > -1 &&
@@ -261,7 +261,7 @@ function copyFolderRecursiveSync() {
     let files = [];
     const targetFolder = path.join( target, basename );
     if ( !fs.existsSync( targetFolder ) ) {
-        fs.mkdirSync( targetFolder );
+        fs.mkdirSync( targetFolder, { recursive: true });
     }
     if ( fs.lstatSync( source ).isDirectory() ) {
         const bre = filter(source);

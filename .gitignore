@@ -3,6 +3,7 @@
 node_modules/
 wip/
 dist
+!packages/babel-plugin-css-to-js-transform/dist
 run
 !packages/wapplr-cli/wapplr-template/run
 my-package/

@@ -24,7 +24,7 @@ async function cleanByPaths(p = {}) {
     }
 
     if (!fs.existsSync(buildPath)){
-        fs.mkdirSync(buildPath);
+        fs.mkdirSync(buildPath, { recursive: true });
     }
     if (fs.existsSync(path.resolve(buildPath, "server.js"))){
         fs.unlinkSync(path.resolve(buildPath, "server.js"))

@@ -94,7 +94,7 @@ module.exports = async function create(p = {}) {
             }
             newPackageJsonForRun.version = rootPackageJson.version || newPackageJsonForRun.version;
             if (!fs.existsSync(buildPath)){
-                fs.mkdirSync(buildPath)
+                fs.mkdirSync(buildPath, { recursive: true })
             }
             fs.writeFileSync(path.resolve(buildPath, "package.json"), JSON.stringify(newPackageJsonForRun, null, "    "))
         }
@@ -196,11 +196,11 @@ module.exports = async function create(p = {}) {
                 const shouldCopyPackagesNames = Object.keys(shouldCopyPackages);
                 if (shouldCopyPackagesNames.length) {
                     if (!fs.existsSync(path.resolve(buildPath))){
-                        fs.mkdirSync(path.resolve(buildPath))
+                        fs.mkdirSync(path.resolve(buildPath), { recursive: true })
                     }
                     const runPackagesPath = path.resolve(buildPath, "packages");
                     if (!fs.existsSync(runPackagesPath)) {
-                        fs.mkdirSync(runPackagesPath);
+                        fs.mkdirSync(runPackagesPath, { recursive: true });
                     }
                     shouldCopyPackagesNames.forEach(function (packageName) {
 
@@ -212,9 +212,9 @@ module.exports = async function create(p = {}) {
 
                         if (!fs.existsSync(path.resolve(runPackagesPath, packageName))) {
 
-                            fs.mkdirSync(path.resolve(runPackagesPath, packageName));
+                            fs.mkdirSync(path.resolve(runPackagesPath, packageName), { recursive: true });
                             const distRelative = path.relative(modulePath, path.resolve(wapplrJson.paths.distPath));
-                            fs.mkdirSync(path.resolve(runPackagesPath, packageName, distRelative));
+                            fs.mkdirSync(path.resolve(runPackagesPath, packageName, distRelative), { recursive: true });
 
                             copyFolderRecursiveSync(path.resolve(modulePath, distRelative), path.resolve(runPackagesPath, packageName));
 
