@@ -17,7 +17,7 @@ npm install --save-dev wapplr-cli
 ## Usage
 
 ```sh
-wapplr-cli create src/my-package
+npx wapplr-cli create src/my-package
 ```
 
 ## Functions
@@ -27,13 +27,13 @@ wapplr-cli create src/my-package
 This command creates a new Wapplr package with `my-package` name to the `path/to/src` folder:
 
 ```sh
-wapplr-cli create path/to/src/my-package
+npx wapplr-cli create path/to/src/my-package
 ```
 
 This command creates a new Wapplr package with `my-package` name to the current folder.
 
 ```sh
-wapplr-cli create my-package
+npx wapplr-cli create my-package
 ```
 
 ### start
@@ -42,7 +42,7 @@ This command create a startable instance inside to the current directory to the 
 Then it runs that, and the browser will open.
 
 ```sh
-wapplr-cli start
+npx wapplr-cli start
 ```
 ### build
 
@@ -50,7 +50,7 @@ This command create a startable instance inside to the current directory to the 
 And it create a distribution to the `./dist` folder
 
 ```sh
-wapplr-cli build
+npx wapplr-cli build
 ```
 
 ### clean
@@ -58,7 +58,7 @@ wapplr-cli build
 This command deletes all files created by wapplr-cli except `wapplr.json`.
 
 ```sh
-wapplr-cli clean
+npx wapplr-cli clean
 ```
 
 # wapplr.json
