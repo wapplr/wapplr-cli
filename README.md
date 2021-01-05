@@ -1,12 +1,20 @@
-# wapplr-cli
+# Wapplr-cli
 
-This package includes all helpers package from Wapplr: 
+This module can handle the development of Wapplr, and facilitates the creation and build of end-user applications. 
+This monorepo includes all helpers package from Wapplr:
 
-- babel-plugin-css-to-js-transform
-- babel-preset-wapplr
-- eslint-config-wapplr
-- postcss-config-wapplr
-- webpack-config-wapplr
+- [babel-plugin-css-to-js-transform](https://github.com/wapplr/wapplr-cli/tree/master/packages/babel-plugin-css-to-js-transform)
+- [babel-preset-wapplr](https://github.com/wapplr/wapplr-cli/tree/master/packages/babel-preset-wapplr)
+- [eslint-config-wapplr](https://github.com/wapplr/wapplr-cli/tree/master/packages/eslint-config-wapplr)
+- [postcss-config-wapplr](https://github.com/wapplr/wapplr-cli/tree/master/packages/postcss-config-wapplr)
+- [wapplr-cli](https://github.com/wapplr/wapplr-cli/tree/master/packages/wapplr-cli)  
+- [webpack-config-wapplr](https://github.com/wapplr/wapplr-cli/tree/master/packages/webpack-config-wapplr)
+
+These wonderful packages have inspired us, so there are many similarities with them:
+
+- [create-react-app](https://github.com/facebook/create-react-app)
+- [react-starter-kit](https://github.com/kriasoft/react-starter-kit)
+- [babel-plugin-css-modules-transform](https://github.com/michalkvasnicak/babel-plugin-css-modules-transform)
 
 ## Installation
 

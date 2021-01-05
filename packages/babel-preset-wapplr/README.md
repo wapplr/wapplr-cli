@@ -1,4 +1,4 @@
-# babel-preset-wapplr
+# Babel-preset-wapplr
 
 The default Babel preset for Wapplr structure.
 

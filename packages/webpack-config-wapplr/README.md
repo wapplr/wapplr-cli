@@ -1,4 +1,4 @@
-# webpack-config-wapplr
+# Webpack-config-wapplr
 
 This package includes [Webpack](https://github.com/webpack/webpack) configuration used by Wapplr.
 

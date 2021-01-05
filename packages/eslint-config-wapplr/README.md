@@ -1,4 +1,4 @@
-#eslint-config-wapplr
+# Eslint-config-wapplr
 
 This package includes the shareable ESLint configuration used by Wapplr.
 

@@ -1,4 +1,4 @@
-import wapplrServer from 'wapplr';
+import wapplrServer from "wapplr";
 
 export default async function createServer(p = {}) {
     return p.wapp || wapplrServer({...p});

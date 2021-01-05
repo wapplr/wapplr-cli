@@ -1,4 +1,4 @@
-# babel-preset-wapplr
+# Babel-preset-wapplr
 
 The default [PostCss](https://github.com/postcss/postcss) config for Wapplr structure.
 

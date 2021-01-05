@@ -1,4 +1,4 @@
-# babel-plugin-css-to-js-transform
+# Babel-plugin-css-to-js-transform
 
 This Babel plugin finds all `require` and all `import` function for css files, 
 and replace them with a new file with this name `[filename]_css.js`.
