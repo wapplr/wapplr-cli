@@ -19,7 +19,7 @@ These wonderful packages have inspired us, so there are many similarities with t
 ## Installation
 
 ```sh
-npm install --save-dev wapplr-cli
+npm install -g wapplr-cli
 ```
 
 ## Usage

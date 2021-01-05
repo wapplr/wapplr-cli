@@ -9,7 +9,6 @@
     "scripts": {
         "create a test": "wapplr-cli create src/my-package"
     },
-    "version": "1.0.0",
     "workspaces": [
         "packages/*",
         "src/*",
