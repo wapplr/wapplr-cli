@@ -31,7 +31,8 @@
         "dist.js",
         "plugin.js"
     ],
-    "version": "1.0.0",
+    "version": "1.0.1",
+    "main": "./index.js",
     "repository": {
         "type": "git",
         "url": "https://github.com/wapplr/wapplr-cli.git",

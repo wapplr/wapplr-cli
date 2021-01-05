@@ -32,10 +32,16 @@ npx wapplr-cli create src/my-package
 
 ### create
 
-This command creates a new Wapplr package with `my-package` name to the `path/to/src` folder:
+This command creates a new Wapplr package with `my-package` name to the `path/to/src/my-package` folder:
 
 ```sh
 npx wapplr-cli create path/to/src/my-package
+```
+
+This command creates a new Wapplr package with `my-package` name to the `my-folder` folder:
+
+```sh
+npx wapplr-cli create my-package --root-path my-folder
 ```
 
 This command creates a new Wapplr package with `my-package` name to the current folder.

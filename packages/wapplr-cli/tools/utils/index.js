@@ -70,12 +70,13 @@ function parseOptionsFromArgs() {
 
             if (
                 ((process.argv.indexOf("--root-path") === -1) && fs.existsSync(path.resolve(process.cwd(), process.argv[startArgI + 2]))) ||
-                ((process.argv.indexOf("--root-path") === -1) && options.runScript === "create")
+                ((process.argv.indexOf("--root-path") === -1) && options.runScript === "create" && process.argv[startArgI + 2].match("/"))
             ){
                 if (!options.paths) {
                     options.paths = {}
                 }
                 options.paths.rootPath = path.relative(process.cwd(), path.resolve(process.cwd(), process.argv[startArgI + 2]))
+
                 const paths = options.paths.rootPath.split(path.sep);
                 if (paths[paths.length-1]){
                     options.packageName = paths[paths.length-1];
@@ -177,7 +178,8 @@ function getOptions(props = {}, callerName) {
 
     const argv = p.argv;
 
-    let packageName = p.packageName;
+    const packageJson = (fs.existsSync(path.resolve(rootPath, "package.json"))) ? require(path.resolve(rootPath, "package.json")) : {};
+    let packageName = packageJson.name || p.packageName;
     if (!packageName && rootPath) {
         try {
             packageName = rootPath.split(path.sep)[rootPath.split(path.sep).length - 1];
