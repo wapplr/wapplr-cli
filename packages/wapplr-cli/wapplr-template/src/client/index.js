@@ -1,14 +1,18 @@
 import wapplrClient from "wapplr";
 
 export default function createClient(p) {
-    return p.wapp || wapplrClient({...p});
+    // noinspection UnnecessaryLocalVariableJS
+    const wapp = p.wapp || wapplrClient({...p});
+    /*code here myFunction(wapp)*/
+    return wapp;
 }
 
 export function createMiddleware(p = {}) {
     // noinspection JSUnusedAssignment,JSUnusedLocalSymbols
-    return function(req, res, next) {
+    return function middleware(req, res, next) {
         // eslint-disable-next-line no-unused-vars
         const wapp = req.wapp || p.wapp || createClient(p);
+        /*code here myFunction(req, res, next)*/
         next();
     }
 }
@@ -31,16 +35,17 @@ export function run(p = defaultConfig) {
     const {DEV} = globals;
 
     const app = wapp.client.app;
-    app.use(createMiddleware({wapp, ...p}))
+    app.use(createMiddleware({wapp, ...p}));
     wapp.client.listen();
 
     if (typeof DEV !== "undefined" && DEV && module.hot){
-        module.hot.accept();
+        app.hot = module.hot;
+        module.hot.accept("./index.js");
     }
 
     return wapp;
 }
 
-if (typeof RUN !== "undefined" && RUN === "wapplr-template") {
+if (typeof RUN !== "undefined" && RUN === "my-package") {
     run();
 }
