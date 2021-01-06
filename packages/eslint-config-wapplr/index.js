@@ -34,7 +34,8 @@ module.exports = {
         WAPP: "readonly",
         RUN: "readonly",
         DEV: "readonly",
-        TYPE: "readonly"
+        TYPE: "readonly",
+        ROOT: "readonly"
     },
 
     overrides: [
