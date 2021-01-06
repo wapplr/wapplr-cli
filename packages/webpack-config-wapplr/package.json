@@ -31,7 +31,7 @@
         "styleLoader.js",
         "webpackHotDevClient.js"
     ],
-    "version": "1.0.2",
+    "version": "1.0.3",
     "scripts": {},
     "repository": {
         "type": "git",

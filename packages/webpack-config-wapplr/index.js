@@ -201,6 +201,8 @@ function serverConfig(p = {}) {
     const siblingAliases = getSiblingAliases(rest);
     const packageJson = getPackageJson(rest);
 
+    const babelPresetPath = (fs.existsSync(path.resolve(rootPath, "node_modules", "babel-preset-wapplr", "index.js"))) ? path.resolve(rootPath, "node_modules", "babel-preset-wapplr", "index.js") : "babel-preset-wapplr";
+
     return {
         context: rootPath,
         mode: isDev ? "development" : "production",
@@ -264,7 +266,7 @@ function serverConfig(p = {}) {
                         babelrc: false,
                         configFile: false,
                         presets: [
-                            [path.resolve(rootPath, "node_modules", "babel-preset-wapplr"),
+                            [babelPresetPath,
                                 {
                                     mode: isDev ? "development" : "production",
                                     react: true,
@@ -346,7 +348,7 @@ function serverConfig(p = {}) {
                 "process.env.NODE_ENV": isDev ? JSON.stringify("development") : JSON.stringify("production"),
                 "BROWSER": JSON.stringify(false),
                 "DEV": JSON.stringify(isDev),
-                "RUN": (isStartScript) ? JSON.stringify(false) : JSON.stringify(packageName),
+                "RUN": (isStartScript) ? JSON.stringify("") : JSON.stringify(packageName),
                 "WAPP": JSON.stringify(buildHash),
                 "TYPE": JSON.stringify(isStartScript ? "start" : "build")
             }),
@@ -411,6 +413,8 @@ function clientConfig(p = {}) {
     const siblingAliases = getSiblingAliases(rest);
     const packageJson = getPackageJson(rest);
 
+    const babelPresetPath = (fs.existsSync(path.resolve(rootPath, "node_modules", "babel-preset-wapplr", "index.js"))) ? path.resolve(rootPath, "node_modules", "babel-preset-wapplr", "index.js") : "babel-preset-wapplr";
+
     return {
         context: rootPath,
         mode: (isDev) ? "development" : "production",
@@ -453,7 +457,7 @@ function clientConfig(p = {}) {
                         babelrc: false,
                         configFile: false,
                         presets: [
-                            [path.resolve(rootPath, "node_modules", "babel-preset-wapplr"),
+                            [babelPresetPath,
                                 {
                                     mode: isDev ? "development" : "production",
                                     react: true,
