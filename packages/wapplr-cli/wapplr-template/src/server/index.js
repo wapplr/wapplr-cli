@@ -46,6 +46,6 @@ export async function run(p = defaultConfig) {
     return wapp;
 }
 
-if (typeof RUN !== "undefined" && RUN === "my-package") {
+if (typeof RUN !== "undefined" && RUN === "wapplr-template") {
     run();
 }
