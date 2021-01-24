@@ -621,7 +621,6 @@ function clientConfig(p = {}) {
                             )
 
                         },
-                        maxSize: 250000,
                         name: "vendors",
                     },
                 },

@@ -8,6 +8,7 @@
     "private": true,
     "scripts": {
         "create a test": "wapplr-cli create src/my-package",
+        "clean all": "wapplr-cli clean src/wapplr && wapplr-cli clean src/wapplr-graphql && wapplr-cli clean src/wapplr-mongo && wapplr-cli clean src/wapplr-posttypes && wapplr-cli clean src/wapplr-authentication && wapplr-cli clean src/wapplr-pwa && wapplr-cli clean src/wapplr-react && wapplr-cli clean src/wapplr-com",
         "build all": "wapplr-cli build src/wapplr && wapplr-cli build src/wapplr-graphql && wapplr-cli build src/wapplr-mongo && wapplr-cli build src/wapplr-posttypes && wapplr-cli build src/wapplr-authentication && wapplr-cli build src/wapplr-pwa && wapplr-cli build src/wapplr-react && wapplr-cli build src/wapplr-com",
         "publsh all": "cd src/wapplr && npm publish && cd ../wapplr-graphql && npm publish && cd ../wapplr-mongo && npm publish && cd ../wapplr-posttypes && npm publish && cd ../wapplr-authentication && npm publish && cd ../wapplr-pwa && npm publish && cd ../wapplr-react"
     },
