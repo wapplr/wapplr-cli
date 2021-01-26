@@ -110,9 +110,9 @@ module.exports = async function create(p = {}) {
         let catchN = 0;
         try {
 
-            console.log("[WAPPLR]","Try run", "yarn --cwd ./" + path.relative(process.cwd(), rootPath) + " install")
+            console.log("[WAPPLR]","Try run", "yarn --cwd " + path.relative(process.cwd(), rootPath) + " install")
 
-            const {stdout, stderr} = await util.promisify(cp.exec)("yarn --cwd ./" + path.relative(process.cwd(), rootPath) + " install");
+            const {stdout, stderr} = await util.promisify(cp.exec)("yarn --cwd " + path.relative(process.cwd(), rootPath) + " install");
             console.group("\n[YARN]")
             if (stdout) {
                 console.log(stdout);
@@ -126,9 +126,9 @@ module.exports = async function create(p = {}) {
             console.log("[WAPPLR]","Can't run yarn install", e)
             catchN = catchN + 1;
             try {
-                console.log("[WAPPLR]","Try run", "npm --prefix ./" + path.relative(process.cwd(), rootPath) + " install")
+                console.log("[WAPPLR]","Try run", "npm --prefix " + path.relative(process.cwd(), rootPath) + " install")
 
-                const {stdout, stderr} = await util.promisify(cp.exec)("[WAPPLR]","Try run", "npm --prefix ./" + path.relative(process.cwd(), rootPath) + " install");
+                const {stdout, stderr} = await util.promisify(cp.exec)("npm --prefix " + path.relative(process.cwd(), rootPath) + " install");
                 console.group("\n[NPM]")
                 if (stdout) {
                     console.log(stdout);
