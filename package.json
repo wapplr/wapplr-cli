@@ -14,8 +14,7 @@
     },
     "workspaces": [
         "packages/*",
-        "src/*",
-        "wip/*"
+        "src/*"
     ],
     "repository": {
         "type": "git",
