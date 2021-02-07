@@ -6,6 +6,7 @@ dist
 !packages/babel-plugin-css-to-js-transform/dist
 run
 !packages/wapplr-cli/wapplr-template/run
+!packages/wapplr-cli/wapplr-react-template/run
 my-package/
 wapplr.json
 .DS_Store

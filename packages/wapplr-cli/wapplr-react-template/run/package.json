@@ -1,0 +1,27 @@
+{
+    "name": "my-runnable-production-build",
+    "description": "A built package with Wapplr-cli for runnable instance",
+    "license": "MIT",
+    "dependencies": {
+        "source-map-support": "^0.5.9",
+        "@babel/runtime": "^7.12.5"
+    },
+    "engines": {
+        "node": ">=12.0.0"
+    },
+    "browserslist": [
+        ">1%",
+        "last 4 versions",
+        "Firefox ESR",
+        "not ie < 9"
+    ],
+    "scripts": {
+        "start": "node server.js"
+    },
+    "version": "1.0.0",
+    "main": "server.js",
+    "workspaces": [
+        "packages/*"
+    ],
+    "private": true
+}

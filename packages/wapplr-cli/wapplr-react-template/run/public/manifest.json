@@ -1,0 +1,23 @@
+{
+    "short_name": "My app",
+    "name": "My app",
+    "description": "My progressive web app",
+    "icons": [
+        {
+            "src": "/assets/icon_192x192.png",
+            "type": "image/png",
+            "sizes": "192x192",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/assets/icon_512x512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "start_url": "/",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#ffffff"
+}
