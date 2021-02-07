@@ -1,4 +1,5 @@
 const getWebpackConfig = require("webpack-config-wapplr");
+const path = require("path");
 
 const {
     getOptions,
@@ -11,14 +12,24 @@ module.exports = async function webpack(p = {}) {
         runOrReturn = "run",
         ...rest} = p;
 
+    const paths = p.paths || {};
+    const {rootPath} = paths;
+
+
     const options = getOptions(rest);
 
     return new Promise(function (resolve, reject) {
 
-        const {compiler, config} = getWebpackConfig({
+        let {compiler, config} = getWebpackConfig({
             ...options,
             mode
         });
+
+        try {
+            const overrides = require(path.resolve(rootPath, "webpack-config-override.js"))({compiler, config});
+            config = overrides.config;
+            compiler = overrides.compiler;
+        } catch(e) {}
 
         if (runOrReturn === "return"){
             return resolve({compiler, config});
