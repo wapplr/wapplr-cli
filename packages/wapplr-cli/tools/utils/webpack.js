@@ -12,11 +12,12 @@ module.exports = async function webpack(p = {}) {
         runOrReturn = "run",
         ...rest} = p;
 
-    const paths = p.paths || {};
-    const {rootPath} = paths;
-
-
     const options = getOptions(rest);
+    const {
+        paths
+    } = options;
+
+    const {rootPath} = paths;
 
     return new Promise(function (resolve, reject) {
 
@@ -26,7 +27,7 @@ module.exports = async function webpack(p = {}) {
         });
 
         try {
-            const overrides = require(path.resolve(rootPath, "webpack-config-override.js"))({compiler, config});
+            const overrides = require(path.resolve(rootPath, "webpack-config-override.js"))({compiler, config, options});
             config = overrides.config;
             compiler = overrides.compiler;
         } catch(e) {}
