@@ -3,7 +3,9 @@
     "description": "It is a template for wapplr structure",
     "license": "MIT",
     "dependencies": {
-        "wapplr": "^1.0.0"
+        "wapplr": "^1.0.0",
+        "wapplr-pwa": "^1.0.0",
+        "wapplr-react": "^1.0.0"
     },
     "devDependencies": {
         "wapplr-cli": "^1.0.0"

@@ -30,6 +30,10 @@ const defaultConfig = {
 }
 
 export async function run(p = defaultConfig) {
+
+    const {env} = process;
+    env.NODE_ENV = process.env.NODE_ENV;
+
     const wapp = await createServer(p);
     const globals = wapp.globals;
     const {DEV} = globals;

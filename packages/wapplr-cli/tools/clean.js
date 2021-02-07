@@ -14,7 +14,7 @@ const createWapplrJson = require("./utils/wapplrJson");
 async function cleanByPaths(p = {}) {
 
     const {paths, options} = p;
-    const {srcPath, buildPath, distPath, templateDirectory} = paths;
+    const {srcPath, buildPath, distPath, templatePath} = paths;
 
     let consoleLine = 0;
 
@@ -108,13 +108,13 @@ async function cleanByPaths(p = {}) {
     }
 
     try {
-        const defaultManifest = require(path.resolve(templateDirectory, "run/public/manifest.json"));
+        const defaultManifest = require(path.resolve(templatePath, "run/public/manifest.json"));
         defaultManifest.icons.forEach(function (iconObject) {
             const srcPaths = iconObject.src.split("/");
             if (fs.existsSync(path.resolve(buildPath, "public", ...srcPaths))) {
                 try {
                     const currentImage = fs.statSync(path.resolve(buildPath, "public", ...srcPaths));
-                    const templateImage = fs.statSync(path.resolve(templateDirectory, "run", "public", ...srcPaths))
+                    const templateImage = fs.statSync(path.resolve(templatePath, "run", "public", ...srcPaths))
                     if (JSON.stringify({size:currentImage.size}) ===
                         JSON.stringify({size:templateImage.size})
                     ) {

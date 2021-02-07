@@ -131,6 +131,16 @@ function parseOptionsFromArgs() {
         options.paths.buildPath = process.argv[process.argv.indexOf("--build-path") + 1];
     }
 
+    if (process.argv.indexOf("--template") > -1 &&
+        process.argv[process.argv.indexOf("--template") + 1] &&
+        !process.argv[process.argv.indexOf("--template") + 1].match("--")
+    ){
+        if (!options.paths) {
+            options.paths = {}
+        }
+        options.paths.templatePath = process.argv[process.argv.indexOf("--template") + 1];
+    }
+
     options.argv = (startArgI > -1) ? process.argv.slice(startArgI+1) : reverseArgvFromOptions(options);
     return options;
 }
@@ -145,12 +155,12 @@ function getPaths(p = {}) {
     const defaultSrcPath = path.resolve(rootPath, "src");
     const defaultBuildPath = path.resolve(rootPath, "run");
     const defaultDistPath = path.resolve(rootPath, "dist");
-    const defaultTemplateDirectory = path.resolve(buildToolsPath, "wapplr-template");
+    const defaultTemplatePath = path.resolve(buildToolsPath, "wapplr-template");
 
     const srcPath = (optionsPaths.srcPath) ? (path.isAbsolute(optionsPaths.srcPath)) ? optionsPaths.srcPath : path.resolve(rootPath, optionsPaths.srcPath) : defaultSrcPath;
     const buildPath = (optionsPaths.buildPath) ? (path.isAbsolute(optionsPaths.buildPath)) ? optionsPaths.buildPath : path.resolve(rootPath, optionsPaths.buildPath): defaultBuildPath;
     const distPath = (optionsPaths.distPath) ? (path.isAbsolute(optionsPaths.distPath)) ? optionsPaths.distPath : path.resolve(rootPath, optionsPaths.distPath): defaultDistPath;
-    const templateDirectory = (optionsPaths.templateDirectory) ? (path.isAbsolute(optionsPaths.templateDirectory)) ? optionsPaths.templateDirectory : path.resolve(buildToolsPath, optionsPaths.templateDirectory): defaultTemplateDirectory;
+    const templatePath = (optionsPaths.templatePath) ? (path.isAbsolute(optionsPaths.templatePath)) ? optionsPaths.templatePath : path.resolve(buildToolsPath, optionsPaths.templatePath): defaultTemplatePath;
 
     return {
         rootPath,
@@ -158,7 +168,7 @@ function getPaths(p = {}) {
         srcPath,
         buildPath,
         distPath,
-        templateDirectory
+        templatePath
     }
 }
 

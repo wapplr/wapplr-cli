@@ -10,9 +10,9 @@ function createManifest(p = {}) {
 
     const options = getOptions(p);
     const {paths, packageName} = options;
-    const {rootPath, templateDirectory, buildPath} = paths;
+    const {rootPath, templatePath, buildPath} = paths;
 
-    const defaultManifest = require(path.resolve(templateDirectory, "run/public/manifest.json"));
+    const defaultManifest = require(path.resolve(templatePath, "run/public/manifest.json"));
 
     if (p.return !== "object") {
         if (!fs.existsSync(path.resolve(buildPath))) {
@@ -82,10 +82,10 @@ function createManifest(p = {}) {
                         }
 
                         if (!fs.existsSync(path.resolve(buildPath, "public", ...srcPaths)) &&
-                            fs.existsSync(path.resolve(templateDirectory, "run", "public", ...srcPaths))
+                            fs.existsSync(path.resolve(templatePath, "run", "public", ...srcPaths))
                         ){
                             copyFileSync(
-                                path.resolve(templateDirectory, "run", "public", ...srcPaths),
+                                path.resolve(templatePath, "run", "public", ...srcPaths),
                                 path.resolve(buildPath, "public", ...srcPaths)
                             )
                         }
@@ -109,7 +109,7 @@ function createServiceWorker(p = {}) {
 
     const options = getOptions(p);
     const {paths} = options;
-    const {templateDirectory, buildPath} = paths;
+    const {templatePath, buildPath} = paths;
 
     if (p.return !== "string"){
         if (!fs.existsSync(path.resolve(buildPath))) {
@@ -122,7 +122,7 @@ function createServiceWorker(p = {}) {
 
     let templateServiceWorker = "";
     try {
-        templateServiceWorker = fs.readFileSync(path.resolve(templateDirectory, "run", "public", "serviceWorker.js")).toString()
+        templateServiceWorker = fs.readFileSync(path.resolve(templatePath, "run", "public", "serviceWorker.js")).toString()
     } catch (e) {}
 
     let existsServiceWorker = "";

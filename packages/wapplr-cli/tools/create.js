@@ -17,7 +17,7 @@ module.exports = async function create(p = {}) {
     const {enableCopyRunPackages, ...rest} = p;
     const options = getOptions(rest, "create");
     const {paths, packageName} = options;
-    const {rootPath, templateDirectory, srcPath, buildPath} = paths;
+    const {rootPath, templatePath, srcPath, buildPath} = paths;
 
     if (options.runScript === "create"){
         await clean(rest)
@@ -27,7 +27,7 @@ module.exports = async function create(p = {}) {
 
     //create package.json
     if (!fs.existsSync(path.resolve(rootPath, "package.json"))){
-        const templateJson = require(path.resolve(templateDirectory, "package.json"))
+        const templateJson = require(path.resolve(templatePath, "package.json"))
         let newPackageJson = {
             ...templateJson,
             name: packageName,
@@ -40,7 +40,7 @@ module.exports = async function create(p = {}) {
 
     //copy src directory and files
     if (!fs.existsSync(srcPath)){
-        copyFolderRecursiveSync(path.resolve(templateDirectory, "src"), rootPath, path.basename(srcPath));
+        copyFolderRecursiveSync(path.resolve(templatePath, "src"), rootPath, path.basename(srcPath));
         itsANewPackage = itsANewPackage + 1;
 
         const serverJsPath = (fs.existsSync(path.resolve(srcPath, "server.js"))) ? path.resolve(srcPath, "server.js") : fs.existsSync(path.resolve(srcPath, "server", "index.js")) ? path.resolve(srcPath, "server", "index.js") : null;
@@ -59,7 +59,7 @@ module.exports = async function create(p = {}) {
 
     //copy run directory and files
     if (!fs.existsSync(buildPath)) {
-        copyFolderRecursiveSync(path.resolve(templateDirectory, "run"), rootPath, path.basename(buildPath), function filter(source){
+        copyFolderRecursiveSync(path.resolve(templatePath, "run"), rootPath, path.basename(buildPath), function filter(source){
             return !!(source.match("manifest.json") || source.match("package.json"));
         });
     }
@@ -67,7 +67,7 @@ module.exports = async function create(p = {}) {
     // create a package.json file for runnable package
     if (!fs.existsSync(path.resolve(buildPath, "package.json"))) {
 
-        const defaultRunPackageJson = require(path.resolve(templateDirectory, "run/package.json"));
+        const defaultRunPackageJson = require(path.resolve(templatePath, "run/package.json"));
 
         let rootPackageJson;
         try {
