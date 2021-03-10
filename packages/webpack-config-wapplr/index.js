@@ -1,4 +1,4 @@
-const fs = require("fs")
+const fs = require("fs");
 const path = require("path");
 const webpack = require("webpack");
 const WebpackAssetsManifest = require("webpack-assets-manifest");
@@ -58,7 +58,7 @@ function resolvePathDistToSrc(sourcePath, options) {
             foundPath = path.resolve(path.join(wapplrJson.paths.srcPath, sourcePath.slice(search.length)))
         }
 
-    })
+    });
 
     if (foundPath){
         return foundPath;
@@ -84,7 +84,7 @@ function moduleResolverResolvePath(mrProps = [], options = {}) {
     }
 
     if (foundPath) {
-        const aliasReplaces = {"_css.js": ".css"}
+        const aliasReplaces = {"_css.js": ".css"};
         Object.keys(aliasReplaces).forEach(function (search) {
             if (foundPath.match(search)) {
                 if (fs.existsSync(foundPath.replace(search, aliasReplaces[search]))) {
@@ -112,7 +112,7 @@ function getStyleLoaders (p = {}) {
 
     const isProd = (mode === "production");
     const isStartScript = ((runScript === "start") || (typeof runScript == "object" && runScript[0] === "start"));
-    const isDev = (isStartScript || !isProd)
+    const isDev = (isStartScript || !isProd);
 
     const enableStyleLoaders = true;
     const reStyle = /\.(css|less|styl|scss|sass|sss)$/;
@@ -194,7 +194,7 @@ function serverConfig(p = {}) {
 
     const isProd = (mode === "production");
     const isStartScript = ((runScript === "start") || (typeof runScript == "object" && runScript[0] === "start"));
-    const isDev = (isStartScript || !isProd)
+    const isDev = (isStartScript || !isProd);
 
     const reScript = /\.(js|mjs|jsx|ts|tsx)$/;
 
@@ -404,7 +404,7 @@ function clientConfig(p = {}) {
 
     const isProd = (mode === "production");
     const isStartScript = ((runScript === "start") || (typeof runScript == "object" && runScript[0] === "start"));
-    const isDev = (isStartScript || !isProd)
+    const isDev = (isStartScript || !isProd);
 
     const reScript = /\.(js|mjs|jsx|ts|tsx)$/;
 
@@ -564,8 +564,8 @@ function clientConfig(p = {}) {
                         const fileFilter = function (file) {
                             const assetMetaInformation = stats.compilation.getAsset(file).info || {};
                             return !(assetMetaInformation.hotModuleReplacement || file.endsWith("hot-update.js") || file.endsWith(".map"));
-                        }
-                        const addPath = function(file){ return manifest.getPublicPath(file) }
+                        };
+                        const addPath = function(file){ return manifest.getPublicPath(file) };
                         const chunkFiles = stats.compilation.chunkGroups.reduce(function(acc, c) {
                             acc[c.name] = [
                                 ...(acc[c.name] || []),
@@ -642,4 +642,4 @@ module.exports = function (p = {}) {
         config,
         compiler: webpack(config)
     }
-}
+};

@@ -14,12 +14,12 @@ export function getConfig(p = {}) {
     const serverConfig = config.server || {};
     const commonConfig = getCommonConfig(p).config;
 
-    const common = {...commonConfig.common}
+    const common = {...commonConfig.common};
 
     const server = {
         ...serverConfig,
         icon: favicon,
-    }
+    };
 
     return {
         config: {
@@ -39,7 +39,7 @@ export default async function createServer(p = {}) {
 
     wapp.contents.addComponent({
         head: Head
-    })
+    });
 
     setContents({wapp});
 
@@ -66,7 +66,7 @@ const defaultConfig = {
             ROOT: (typeof ROOT !== "undefined") ? ROOT : __dirname
         }
     }
-}
+};
 
 export async function run(p = defaultConfig) {
 

@@ -42,8 +42,8 @@ async function devServer(p = {}) {
 
             compiler.hooks.done.tap(name, function(stats) {
                 console.groupEnd();
-                console.group("\n[WEBPACK] Compiler info")
-                console.group(name+":")
+                console.group("\n[WEBPACK] Compiler info");
+                console.group(name+":");
                 console.info(stats.toString(config.stats));
                 const timeEnd = new Date();
                 const time = timeEnd.getTime() - timeStart.getTime();
@@ -126,7 +126,7 @@ async function devServer(p = {}) {
                     return;
                 }
                 console.groupEnd();
-                console.group("\n" + hmrPrefix)
+                console.group("\n" + hmrPrefix);
                 if (updatedModules.length === 0) {
                     console.info(`Nothing hot updated.`);
                 } else {
@@ -165,7 +165,7 @@ async function devServer(p = {}) {
         }
     });
 
-    console.group("\n[WEBPACK]")
+    console.group("\n[WEBPACK]");
 
     await clientPromise;
     await serverPromise;
@@ -173,7 +173,7 @@ async function devServer(p = {}) {
     console.groupEnd();
 
     const timeStart = new Date();
-    console.group("\n[WAPPLR]",`[${format(timeStart)}] Launching server...`)
+    console.group("\n[WAPPLR]",`[${format(timeStart)}] Launching server...`);
 
     wapp = await require(path.relative(__dirname, path.resolve(buildPath, "./server"))).run();
     app = wapp.server.app;
@@ -183,7 +183,7 @@ async function devServer(p = {}) {
     const port = process.env.PORT ? Number(process.env.PORT) : undefined;
     const bs = browserSync.create();
 
-    createServiceWorker(options)
+    createServiceWorker(options);
 
     await new Promise(function(resolve, reject) {
         return bs.init({
@@ -216,7 +216,7 @@ async function start(p = {}) {
     await clean(options);
     await create(options);
 
-    const {compiler, config} = await webpack({...options, mode:"development", runOrReturn:"return"})
+    const {compiler, config} = await webpack({...options, mode:"development", runOrReturn:"return"});
     await devServer({...options, compiler, config});
 
     await wapplrJson(options);

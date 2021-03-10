@@ -14,8 +14,8 @@ module.exports = async function wapplrJson(p = {}) {
         rootPath,
     } = paths;
 
-    const newJson = {...options}
+    const newJson = {...options};
 
     fs.writeFileSync(path.resolve(rootPath, "wapplr.json"), JSON.stringify(newJson, null, "    "))
 
-}
+};

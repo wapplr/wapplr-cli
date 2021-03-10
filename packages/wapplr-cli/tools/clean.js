@@ -50,7 +50,7 @@ async function cleanByPaths(p = {}) {
                 consoleLog("Unlink file: " + path.join(buildPath, "public", asset[key]+".LICENSE.txt"));
                 fs.unlinkSync(path.join(buildPath, "public", asset[key]+".LICENSE.txt"))
             }
-        })
+        });
         consoleLog("Unlink file: " + path.resolve(buildPath, "asset-manifest.json"));
         fs.unlinkSync(path.resolve(buildPath, "asset-manifest.json"))
     }
@@ -70,7 +70,7 @@ async function cleanByPaths(p = {}) {
                 consoleLog("Unlink file: " + path.join(buildPath,  asset[key]+".LICENSE.txt"));
                 fs.unlinkSync(path.join(buildPath,  asset[key]+".LICENSE.txt"))
             }
-        })
+        });
         consoleLog("Unlink file: " + path.resolve(buildPath, "server-asset-manifest.json"));
         fs.unlinkSync(path.resolve(buildPath, "server-asset-manifest.json"))
     }
@@ -114,7 +114,7 @@ async function cleanByPaths(p = {}) {
             if (fs.existsSync(path.resolve(buildPath, "public", ...srcPaths))) {
                 try {
                     const currentImage = fs.statSync(path.resolve(buildPath, "public", ...srcPaths));
-                    const templateImage = fs.statSync(path.resolve(templatePath, "run", "public", ...srcPaths))
+                    const templateImage = fs.statSync(path.resolve(templatePath, "run", "public", ...srcPaths));
                     if (JSON.stringify({size:currentImage.size}) ===
                         JSON.stringify({size:templateImage.size})
                     ) {
@@ -123,7 +123,7 @@ async function cleanByPaths(p = {}) {
                     }
                 } catch (e) {}
             }
-        })
+        });
 
         if (fs.existsSync(path.resolve(buildPath, "public", "manifest.json"))) {
             try {
@@ -153,7 +153,7 @@ async function cleanByPaths(p = {}) {
                 } catch (e) {}
 
                 if (existsOverRides) {
-                    existsOverRides = existsOverRides.replace(/\n/g, "").replace(/ /g, "")
+                    existsOverRides = existsOverRides.replace(/\n/g, "").replace(/ /g, "");
                     if (existsOverRides === "/***yourcodehere**/"){
                         consoleLog("Unlink file: " + path.resolve(buildPath, "public", "serviceWorker.js"));
                         fs.unlinkSync(path.resolve(buildPath, "public", "serviceWorker.js"))
@@ -193,12 +193,12 @@ module.exports = async function clean(p = {}) {
     const wapplrJson = (fs.existsSync(path.resolve(rootPath, "wapplr.json"))) ? require(path.resolve(rootPath, "wapplr.json")) : {};
 
     if (wapplrJson && wapplrJson.paths){
-        await cleanByPaths({paths: wapplrJson.paths, options: wapplrJson})
+        await cleanByPaths({paths: wapplrJson.paths, options: wapplrJson});
         if (options.runScript === "clean"){
             await createWapplrJson({...options, paths: wapplrJson.paths});
         }
     } else {
-        await cleanByPaths({paths, options})
+        await cleanByPaths({paths, options});
         if (options.runScript === "clean") {
             await createWapplrJson(options);
         }
@@ -206,4 +206,4 @@ module.exports = async function clean(p = {}) {
 
     console.groupEnd();
 
-}
+};

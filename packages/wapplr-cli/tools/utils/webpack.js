@@ -35,13 +35,13 @@ module.exports = async function webpack(p = {}) {
         if (runOrReturn === "return"){
             return resolve({compiler, config});
         } else {
-            console.group("[WEBPACK]")
+            console.group("[WEBPACK]");
             compiler.run(function(err, stats) {
-                console.groupEnd()
+                console.groupEnd();
                 if (err) {
                     return reject(err);
                 }
-                console.group("\n[WEBPACK] Compiler info")
+                console.group("\n[WEBPACK] Compiler info");
                 console.info(stats.toString(config[0].stats));
                 console.groupEnd();
                 if (stats.hasErrors()) {
@@ -51,4 +51,4 @@ module.exports = async function webpack(p = {}) {
             });
         }
     })
-}
+};

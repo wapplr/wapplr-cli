@@ -26,7 +26,7 @@ export default function setContents(p = {}) {
                 return getTitle({...p, title: "Home"})
             }
         }
-    })
+    });
 
     wapp.router.replace([
         {path: "/", contentName: "home"},

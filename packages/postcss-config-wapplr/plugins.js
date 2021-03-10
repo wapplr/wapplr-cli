@@ -11,4 +11,4 @@ module.exports = function (p = {}) {
             autoprefixer: { flexbox: 'no-2009' },
         }),
     ]
-}
+};

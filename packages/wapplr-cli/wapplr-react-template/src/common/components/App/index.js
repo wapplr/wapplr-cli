@@ -27,7 +27,7 @@ export default function App(props) {
         return function useUnsubscribe(){
             unsub();
         }
-    }, [url])
+    }, [url]);
 
     return (
         <div className={style.app}>

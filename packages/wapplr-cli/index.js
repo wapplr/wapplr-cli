@@ -10,7 +10,7 @@ if (require.main === module && process.argv.length > 2) {
     delete require.cache[__filename];
     const mod = (process.argv[2] !== "run") ? moduleExports[process.argv[2]] : null;
     if (!mod){
-        console.log("There is no "+process.argv[2]+" command, please use one of create, clean, build or start command")
+        console.log("There is no "+process.argv[2]+" command, please use one of create, clean, build or start command");
         return null;
     }
     run(mod).catch(function(err){

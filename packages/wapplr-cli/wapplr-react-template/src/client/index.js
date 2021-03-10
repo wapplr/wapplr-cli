@@ -13,11 +13,11 @@ export function getConfig(p = {}) {
     const clientConfig = config.client || {};
     const commonConfig = getCommonConfig(p).config;
 
-    const common = {...commonConfig.common}
+    const common = {...commonConfig.common};
 
     const client = {
         ...clientConfig,
-    }
+    };
 
     return {
         config: {
@@ -63,7 +63,7 @@ const defaultConfig = {
             ROOT: (typeof ROOT !== "undefined") ? ROOT : "/"
         }
     }
-}
+};
 
 export async function run(p = defaultConfig) {
 

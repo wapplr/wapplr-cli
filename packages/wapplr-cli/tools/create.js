@@ -23,18 +23,18 @@ module.exports = async function create(p = {}) {
         await clean(rest)
     }
 
-    let itsANewPackage = 0
+    let itsANewPackage = 0;
 
     //create package.json
     if (!fs.existsSync(path.resolve(rootPath, "package.json"))){
-        const templateJson = require(path.resolve(templatePath, "package.json"))
+        const templateJson = require(path.resolve(templatePath, "package.json"));
         let newPackageJson = {
             ...templateJson,
             name: packageName,
             description: packageName.slice(0,1).toUpperCase()+packageName.slice(1)
-        }
-        newPackageJson = JSON.parse(JSON.stringify(newPackageJson).replace(/wapplr-template/g, packageName))
-        fs.writeFileSync(path.resolve(rootPath, "package.json"), JSON.stringify(newPackageJson, null, "    "))
+        };
+        newPackageJson = JSON.parse(JSON.stringify(newPackageJson).replace(/wapplr-template/g, packageName));
+        fs.writeFileSync(path.resolve(rootPath, "package.json"), JSON.stringify(newPackageJson, null, "    "));
         itsANewPackage = itsANewPackage + 1;
     }
 
@@ -82,9 +82,9 @@ module.exports = async function create(p = {}) {
             newPackageJsonForRun.name = rootPackageJson.name || newPackageJsonForRun.name;
             newPackageJsonForRun.description = rootPackageJson.description || newPackageJsonForRun.description;
             newPackageJsonForRun.license = rootPackageJson.license || newPackageJsonForRun.license;
-            newPackageJsonForRun.dependencies = {...newPackageJsonForRun.dependencies, ...(rootPackageJson.dependencies) ? rootPackageJson.dependencies : {}}
-            newPackageJsonForRun.engines = {...newPackageJsonForRun.engines, ...(rootPackageJson.engines) ? rootPackageJson.engines : {}}
-            newPackageJsonForRun.browserslist = [...(newPackageJsonForRun.browserslist) ? newPackageJsonForRun.browserslist : []]
+            newPackageJsonForRun.dependencies = {...newPackageJsonForRun.dependencies, ...(rootPackageJson.dependencies) ? rootPackageJson.dependencies : {}};
+            newPackageJsonForRun.engines = {...newPackageJsonForRun.engines, ...(rootPackageJson.engines) ? rootPackageJson.engines : {}};
+            newPackageJsonForRun.browserslist = [...(newPackageJsonForRun.browserslist) ? newPackageJsonForRun.browserslist : []];
             if (rootPackageJson.browserslist && rootPackageJson.browserslist.length) {
                 rootPackageJson.browserslist.forEach(function (value) {
                     if (newPackageJsonForRun.browserslist.indexOf(value) === -1) {
@@ -110,10 +110,10 @@ module.exports = async function create(p = {}) {
         let catchN = 0;
         try {
 
-            console.log("[WAPPLR]","Try run", "yarn --cwd " + path.relative(process.cwd(), rootPath) + " install")
+            console.log("[WAPPLR]","Try run", "yarn --cwd " + path.relative(process.cwd(), rootPath) + " install");
 
             const {stdout, stderr} = await util.promisify(cp.exec)("yarn --cwd " + path.relative(process.cwd(), rootPath) + " install");
-            console.group("\n[YARN]")
+            console.group("\n[YARN]");
             if (stdout) {
                 console.log(stdout);
             }
@@ -123,13 +123,13 @@ module.exports = async function create(p = {}) {
             console.groupEnd()
 
         } catch (e){
-            console.log("[WAPPLR]","Can't run yarn install", e)
+            console.log("[WAPPLR]","Can't run yarn install", e);
             catchN = catchN + 1;
             try {
-                console.log("[WAPPLR]","Try run", "npm --prefix " + path.relative(process.cwd(), rootPath) + " install")
+                console.log("[WAPPLR]","Try run", "npm --prefix " + path.relative(process.cwd(), rootPath) + " install");
 
                 const {stdout, stderr} = await util.promisify(cp.exec)("npm --prefix " + path.relative(process.cwd(), rootPath) + " install");
-                console.group("\n[NPM]")
+                console.group("\n[NPM]");
                 if (stdout) {
                     console.log(stdout);
                 }
@@ -139,12 +139,12 @@ module.exports = async function create(p = {}) {
                 console.groupEnd();
 
             } catch (e){
-                console.log("[WAPPLR]","Can't run npm install", e)
+                console.log("[WAPPLR]","Can't run npm install", e);
                 catchN = catchN + 1;
             }
         }
         if (catchN < 2) {
-            console.log("[WAPPLR]","Packages installed")
+            console.log("[WAPPLR]","Packages installed");
             if (options.runScript === "create") {
                 try {
                     const build = require("./build");
@@ -239,4 +239,4 @@ module.exports = async function create(p = {}) {
         await createWapplrJson(options);
     }
 
-}
+};

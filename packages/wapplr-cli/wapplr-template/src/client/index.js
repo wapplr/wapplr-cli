@@ -27,7 +27,7 @@ const defaultConfig = {
             ROOT: (typeof ROOT !== "undefined") ? ROOT : "/"
         }
     }
-}
+};
 
 export function run(p = defaultConfig) {
     const wapp = createClient(p);

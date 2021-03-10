@@ -34,7 +34,7 @@ function deleteFolderRecursiveSync (path) {
 /**Clean before build*/
 async function clean(p = {}) {
 
-    const {outDir} = getPaths(p)
+    const {outDir} = getPaths(p);
 
     if (fs.existsSync(outDir)){
         deleteFolderRecursiveSync(outDir);
@@ -55,7 +55,7 @@ async function processCssFunction(processCss) {
             autoprefixer: { flexbox: "no-2009" },
         }),
     ];
-    const runner = postcss(plugins)
+    const runner = postcss(plugins);
     return await processCss({postcss, plugins, runner});
 }
 
@@ -66,7 +66,7 @@ async function processCssFunction(processCss) {
 
 async function processCss(p = {}) {
 
-    const {rootDir, outDir, srcDir} = getPaths(p)
+    const {rootDir, outDir, srcDir} = getPaths(p);
 
     await processCssFunction(async function processCss({runner}) {
 
@@ -92,12 +92,12 @@ async function processCss(p = {}) {
                     const from = path.resolve(srcDir, relativePath);
                     const to = path.resolve(outDir, relativePath);
                     const css = fs.readFileSync(from);
-                    const result = await runner.process(css, {from: from, to: to})
+                    const result = await runner.process(css, {from: from, to: to});
                     if (!fs.existsSync(path.dirname(to))){
                         fs.mkdirSync(path.dirname(to), { recursive: true });
                     }
                     if (!fs.existsSync(to)) {
-                        fs.writeFileSync(to, result.css)
+                        fs.writeFileSync(to, result.css);
                         console.log("Css processed: " + to)
                     } else {
                         console.log("File already exists, run clean script or delete it manually before process css: " + to)
@@ -117,7 +117,7 @@ async function processCss(p = {}) {
  **/
 async function build(p = {}) {
 
-    const {rootDir, outDir, srcDir} = getPaths(p)
+    const {rootDir, outDir, srcDir} = getPaths(p);
 
     await clean(p);
     await processCss(p);
@@ -125,7 +125,7 @@ async function build(p = {}) {
     console.log("\nRun babel: " + execText);
     const {stdout, stderr} = await util.promisify(cp.exec)(execText);
 
-    console.group("\n[BABEL]")
+    console.group("\n[BABEL]");
     if (stdout) {console.log(stdout);}
     if (stderr) {console.error(stderr)}
     console.groupEnd();

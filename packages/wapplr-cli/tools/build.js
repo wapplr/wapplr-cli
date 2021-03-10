@@ -34,12 +34,12 @@ module.exports = async function build(p = {}) {
 
     await webpack({...options, mode:"production"});
     await delay(2000);
-    await createServiceWorker(options)
+    await createServiceWorker(options);
     await processCss(options);
 
     const babelPath = (fs.existsSync(path.resolve(buildToolsPath, "../.bin/babel"))) ? '"' + path.resolve(buildToolsPath, "../.bin/babel") + '"' :
         (fs.existsSync(path.resolve(buildToolsPath, "./node_modules/.bin/babel"))) ? '"' + path.resolve(buildToolsPath, "./node_modules/.bin/babel") + '"' :
-            (fs.existsSync(path.resolve(rootPath, "./node_modules/.bin/babel"))) ? '"' + path.resolve(rootPath, "./node_modules/.bin/babel") + '"' : "babel"
+            (fs.existsSync(path.resolve(rootPath, "./node_modules/.bin/babel"))) ? '"' + path.resolve(rootPath, "./node_modules/.bin/babel") + '"' : "babel";
 
     const babelPresetPath = (fs.existsSync(path.resolve(rootPath, "node_modules", "babel-preset-wapplr", "dist.js"))) ? '"' + path.resolve(rootPath, "node_modules", "babel-preset-wapplr", "dist.js") + '"' : "babel-preset-wapplr/dist";
 
@@ -47,7 +47,7 @@ module.exports = async function build(p = {}) {
     console.log("\n[WCI]","Run babel: " + execText);
     const {stdout, stderr} = await util.promisify(cp.exec)(execText);
 
-    console.group("\n[BABEL]")
+    console.group("\n[BABEL]");
     if (stdout) {
         console.log(stdout);
     }
@@ -64,4 +64,4 @@ module.exports = async function build(p = {}) {
 
     await wapplrJson(options);
 
-}
+};

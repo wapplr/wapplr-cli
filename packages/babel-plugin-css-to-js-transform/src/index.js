@@ -9,7 +9,7 @@ export default function cssToJsTransform({ types: t }) {
         writable: true,
         enumerable: true,
         configurable: false,
-    }
+    };
 
     const pluginOptions = Object.create(Object.prototype, {
         defaultOptions: {
@@ -83,7 +83,7 @@ export default function cssToJsTransform({ types: t }) {
                     if (arg.match("@babel") && arg.match("babel")){
                         foundBabel = i;
                     }
-                })
+                });
                 if (foundBabel > -1 && !args[foundBabel + 1].match("--")){
                     if (extname(args[foundBabel + 1]) === ".js"){
                         const fileName = args[foundBabel + 1];
@@ -145,7 +145,7 @@ export default function cssToJsTransform({ types: t }) {
 
                 const {getDir, defaultAlias, getRelativeRoot} = pluginOptions;
 
-                let cssFileRelativeFromRoot = relative(root, resolve(dirname(currentFile), value))
+                let cssFileRelativeFromRoot = relative(root, resolve(dirname(currentFile), value));
                 const outDir = getDir();
                 const srcDir = getRelativeRoot(cssFileRelativeFromRoot);
 
@@ -217,7 +217,7 @@ tokens._module = (typeof module !== "undefined") ? module : {id:"${moduleId}"};
 exports["default"] = tokens;`
             }
         },
-    })
+    });
 
     const pluginApi = Object.create(Object.prototype, {
         manipulateOptions: {
@@ -225,7 +225,7 @@ exports["default"] = tokens;`
             enumerable: true,
             value: function manipulateOptions(options) {
 
-                const {matcher, pushStylesCreator} = pluginOptions
+                const {matcher, pushStylesCreator} = pluginOptions;
 
                 if (pluginOptions.initialized || pluginOptions.inProcessingFunction) {
                     return options;
@@ -267,7 +267,7 @@ exports["default"] = tokens;`
 
                     if (data.css && data.tokens){
 
-                        let cssFileRelativeFromRoot = relative(data.root, resolve(dirname(data.currentFile), data.newValue))
+                        let cssFileRelativeFromRoot = relative(data.root, resolve(dirname(data.currentFile), data.newValue));
                         const outDir = getDir();
                         const srcDir = getRelativeRoot(cssFileRelativeFromRoot);
                         const cssFileRelativeFromSrc = relative(srcDir, cssFileRelativeFromRoot);
@@ -281,10 +281,10 @@ exports["default"] = tokens;`
                             if (!existsSync(dirname(newCssDest))) {
                                 mkdirSync(dirname(newCssDest), {recursive: true});
                             }
-                            const content = getContent(data.tokens, data.css, moduleId)
+                            const content = getContent(data.tokens, data.css, moduleId);
                             writeFileSync(newCssDest, content);
 
-                            console.log("Created _css.js file: " + newCssDest)
+                            console.log("Created _css.js file: " + newCssDest);
 
                             if (!existsSync(newCssDest.replace("_css.js", ".css"))) {
                                 const cssTo = newCssDest.replace("_css.js", ".css");
@@ -296,7 +296,7 @@ exports["default"] = tokens;`
 
                     }
 
-                })
+                });
 
                 pluginOptions.cssData = {};
 
@@ -310,7 +310,7 @@ exports["default"] = tokens;`
 
                     const { file } = p;
                     const value = path.parentPath.node.source.value;
-                    const {normalisePath, requireCssFile} = pluginOptions
+                    const {normalisePath, requireCssFile} = pluginOptions;
                     const {variableDeclarator, variableDeclaration, memberExpression, callExpression, stringLiteral, identifier} = t;
 
                     if (typeof value == "string" && pluginOptions.matchExtensions.test(value)) {
@@ -324,7 +324,7 @@ exports["default"] = tokens;`
                         const tokens = requiredData.tokens;
                         const css = requiredData.css;
 
-                        const newValue = relative(dirname(currentFile), resolve(dirname(currentFile), value)).replace(".css", "_css.js")
+                        const newValue = relative(dirname(currentFile), resolve(dirname(currentFile), value)).replace(".css", "_css.js");
 
                         if (!pluginOptions.cssData[cssFileAbsolute]){
                             pluginOptions.cssData[cssFileAbsolute] = {};
@@ -340,7 +340,7 @@ exports["default"] = tokens;`
                             cssFileAbsolute,
                             tokens,
                             css,
-                        }
+                        };
 
                         const varDeclaration = variableDeclaration(
                             "var",
@@ -366,7 +366,7 @@ exports["default"] = tokens;`
                 CallExpression(path, { file }) {
 
                     const { callee: { name: calleeName }, arguments: args } = path.node;
-                    const {normalisePath, requireCssFile} = pluginOptions
+                    const {normalisePath, requireCssFile} = pluginOptions;
                     const {isStringLiteral, isExpressionStatement, memberExpression, callExpression, stringLiteral, identifier} = t;
 
                     if (calleeName !== "require" || !args.length || !isStringLiteral(args[0])) {
@@ -386,7 +386,7 @@ exports["default"] = tokens;`
                         const tokens = requiredData.tokens;
                         const css = requiredData.css;
 
-                        const newValue = relative(dirname(currentFile), resolve(dirname(currentFile), value)).replace(".css", "_css.js")
+                        const newValue = relative(dirname(currentFile), resolve(dirname(currentFile), value)).replace(".css", "_css.js");
 
                         if (!pluginOptions.cssData[cssFileAbsolute]){
                             pluginOptions.cssData[cssFileAbsolute] = {};
@@ -402,7 +402,7 @@ exports["default"] = tokens;`
                             tokens,
                             css,
                             newValue,
-                        }
+                        };
 
                         if (!isExpressionStatement(path.parent)) {
 
@@ -422,7 +422,7 @@ exports["default"] = tokens;`
                 }
             }
         }
-    })
+    });
 
     return pluginApi;
 

@@ -10,7 +10,7 @@
         "wapplr-cli": "1.0.0"
     },
     "main": "dist/index.js",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "scripts": {
         "babel-plugin build": "babel src/index.js --presets=babel-preset-wapplr/plugin --out-dir dist"
     },

@@ -9,7 +9,7 @@ module.exports = function run(fn) {
         const optionsFromArgs = parseOptionsFromArgs();
         console.log("[WAPPLR]", `[${format(start)}] Starting "${task.name}${(optionsFromArgs && JSON.stringify(optionsFromArgs) !== "{}") ? ` (${JSON.stringify(optionsFromArgs)})` : ""}"...`,);
 
-        const options = getOptions({...optionsFromArgs, time: start, console: true})
+        const options = getOptions({...optionsFromArgs, time: start, console: true});
 
         return task(options).then(function (resolution) {
             const end = new Date();
@@ -23,4 +23,4 @@ module.exports = function run(fn) {
     console.log("There is no this command, please use one of create, clean, build or start command");
     return null;
 
-}
+};

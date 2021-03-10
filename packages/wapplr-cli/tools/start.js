@@ -13,7 +13,7 @@ async function devServer(p) {
         const child = cp.fork(path.resolve(buildToolsPath, "./tools/utils/devServer.js"), options.argv);
         child.on("spawn", function (){
             resolve()
-        })
+        });
         child.on("error", function (e){
             reject(e)
         })
@@ -25,4 +25,4 @@ module.exports = async function start(p = {}) {
     console.group("[WAPPLR] Start development server child process");
     await devServer(options);
     console.groupEnd();
-}
+};

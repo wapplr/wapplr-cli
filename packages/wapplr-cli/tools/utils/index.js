@@ -60,7 +60,7 @@ function parseOptionsFromArgs() {
         if (arg.match("wapplr-cli")){
             startArgI = i
         }
-    })
+    });
 
     if (startArgI > -1) {
         if (process.argv[startArgI + 1] && !process.argv[startArgI + 1].match("--")) {
@@ -75,7 +75,7 @@ function parseOptionsFromArgs() {
                 if (!options.paths) {
                     options.paths = {}
                 }
-                options.paths.rootPath = path.relative(process.cwd(), path.resolve(process.cwd(), process.argv[startArgI + 2]))
+                options.paths.rootPath = path.relative(process.cwd(), path.resolve(process.cwd(), process.argv[startArgI + 2]));
 
                 const paths = options.paths.rootPath.split(path.sep);
                 if (paths[paths.length-1]){
@@ -206,7 +206,7 @@ function getOptions(props = {}, callerName) {
         buildHash,
         paths,
         argv,
-    }
+    };
 
     if (console) {
         consoleOptions(options);
@@ -218,7 +218,7 @@ function getOptions(props = {}, callerName) {
 function consoleOptions(p = {}) {
 
     console.group("\n[WAPPLR]");
-    console.log(p)
+    console.log(p);
     console.groupEnd();
 
 }
@@ -244,7 +244,7 @@ function copyFileSync( source, target ) {
 function copyFolderRecursiveSync() {
 
     const source = arguments[0];
-    const target = arguments[1]
+    const target = arguments[1];
 
     let filter = function () {return false;};
     let basename = path.basename( source );

@@ -31,17 +31,17 @@ function createManifest(p = {}) {
     } catch (e) {}
 
     let runPackageJson = null;
-    let name = ""
+    let name = "";
 
     try {
-        runPackageJson = require(path.resolve(buildPath, "package.json"))
+        runPackageJson = require(path.resolve(buildPath, "package.json"));
         name = runPackageJson.name.replace(/-/g, " ").replace(/_/g, " ");
         name = name.charAt(0).toUpperCase() + name.slice(1);
     } catch (e) {}
 
     try {
         if (!runPackageJson) {
-            runPackageJson = require(path.resolve(rootPath, "package.json"))
+            runPackageJson = require(path.resolve(rootPath, "package.json"));
             name = runPackageJson.name.replace(/-/g, " ").replace(/_/g, " ");
             name = name.charAt(0).toUpperCase() + name.slice(1);
         }
@@ -76,7 +76,7 @@ function createManifest(p = {}) {
                 existsManifest[key].forEach(function (iconObject, i) {
                     try {
                         const srcPaths = iconObject.src.split("/");
-                        const folderRelativeFromPublic = srcPaths.slice(0,-1)
+                        const folderRelativeFromPublic = srcPaths.slice(0,-1);
                         if (!fs.existsSync(path.resolve(buildPath, "public", ...folderRelativeFromPublic))){
                             fs.mkdirSync(path.resolve(buildPath, "public", ...folderRelativeFromPublic), { recursive: true });
                         }
@@ -95,7 +95,7 @@ function createManifest(p = {}) {
         }
 
 
-    })
+    });
 
     if (p.return === "object") {
         return existsManifest;
@@ -143,7 +143,7 @@ function createServiceWorker(p = {}) {
     try {
         if (templateServiceWorker) {
             // noinspection RegExpRedundantEscape
-            const content = templateServiceWorker.match(/(\/\*contentStart \[\*\/)([\S\s]*?)(\/\*\] contentEnd\*\/)/)[0]
+            const content = templateServiceWorker.match(/(\/\*contentStart \[\*\/)([\S\s]*?)(\/\*\] contentEnd\*\/)/)[0];
             if (content) {
                 // noinspection RegExpRedundantEscape
                 existsServiceWorker = existsServiceWorker.replace(/(\/\*contentStart \[\*\/)([\S\s]*?)(\/\*\] contentEnd\*\/)/, "" + content + "");
@@ -163,18 +163,18 @@ function createServiceWorker(p = {}) {
 
     let hash = Date.now();
     try {
-        hash = bundleFiles[bundleFiles.length - 1].split("/").slice(-1)[0].split(".").slice(1, -1)[0]
+        hash = bundleFiles[bundleFiles.length - 1].split("/").slice(-1)[0].split(".").slice(1, -1)[0];
         if (!hash) {
             hash = bundleFiles[bundleFiles.length - 1].split("/").slice(-1)[0].split(".")[0];
         }
     } catch (e){}
     // noinspection RegExpRedundantEscape
     existsServiceWorker = existsServiceWorker.replace(/(\/\*cacheName \[\*\/)(.*?)(\/\*\]\*\/)/,
-        '$1const cacheName = "'+hash+'"$3')
+        '$1const cacheName = "'+hash+'"$3');
 
     // noinspection RegExpRedundantEscape
     existsServiceWorker = existsServiceWorker.replace(/(\/\*bundleFiles \[\*\/)(.*?)(\/\*\]\*\/)/,
-        "$1const bundleFiles = ["+bundleFiles.map(function(f){return `"${f}"`}).join(",")+"]$3")
+        "$1const bundleFiles = ["+bundleFiles.map(function(f){return `"${f}"`}).join(",")+"]$3");
 
     if (p.return === "string"){
         return existsServiceWorker;
@@ -198,4 +198,4 @@ module.exports = {
     default: createManifestAndServiceWorker,
     createServiceWorker,
     createManifest
-}
+};

@@ -35,11 +35,11 @@ module.exports = async function processCss(p = {}) {
                     const from = path.resolve(srcPath, relativePath);
                     const to = path.resolve(distPath, relativePath);
                     const css = fs.readFileSync(from);
-                    const result = await runner.process(css, {from: from, to: to})
+                    const result = await runner.process(css, {from: from, to: to});
                     if (!fs.existsSync(path.dirname(to))){
                         fs.mkdirSync(path.dirname(to), { recursive: true });
                     }
-                    fs.writeFileSync(to, result.css)
+                    fs.writeFileSync(to, result.css);
                     return resolve();
                 } catch (e) {
                     return reject(e)
@@ -48,4 +48,4 @@ module.exports = async function processCss(p = {}) {
         }))
 
     })
-}
+};
