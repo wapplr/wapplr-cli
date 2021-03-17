@@ -15,14 +15,15 @@ function getPackageJson(p = {}) {
 
 function getSiblingAliases(p = {}) {
 
-    const {paths, packageName} = p;
+    const {paths, packageName, enablePackageName} = p;
     const {rootPath} = paths;
     const parentPath = path.resolve(rootPath, "../");
 
     const siblingAliases = {};
 
     fs.readdirSync(parentPath).forEach(function(file) {
-        if(fs.lstatSync(path.resolve(parentPath, file)).isDirectory() && packageName !== file) {
+        if((fs.lstatSync(path.resolve(parentPath, file)).isDirectory() && packageName !== file) ||
+            (fs.lstatSync(path.resolve(parentPath, file)).isDirectory() && packageName === file && enablePackageName)) {
 
             const wapplrJson = fs.existsSync(path.resolve(parentPath, file, "wapplr.json")) ? require(path.resolve(parentPath, file, "wapplr.json")) : null;
             const thereIsPackageJson = fs.existsSync(path.resolve(parentPath, file, "package.json"));
@@ -44,7 +45,7 @@ function getSiblingAliases(p = {}) {
 
 function resolvePathDistToSrc(sourcePath, options) {
 
-    const siblingAliases = getSiblingAliases(options);
+    const siblingAliases = getSiblingAliases({...options, enablePackageName: true});
 
     let foundPath = null;
 
