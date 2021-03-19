@@ -286,7 +286,7 @@ function serverConfig(p = {}) {
                                         resolvePath: function(...mrProps) {
                                             return moduleResolverResolvePath(mrProps, {...rest, target:"node"})
                                         },
-                                        loglevel: "warn"
+                                        loglevel: "verbose"
                                     }
                                 ]
                             ]
@@ -351,7 +351,8 @@ function serverConfig(p = {}) {
                 "DEV": JSON.stringify(isDev),
                 "RUN": (isStartScript) ? JSON.stringify("") : JSON.stringify(packageName),
                 "WAPP": JSON.stringify(buildHash),
-                "TYPE": JSON.stringify(isStartScript ? "start" : "build")
+                "TYPE": JSON.stringify(isStartScript ? "start" : "build"),
+                "NAME": JSON.stringify(packageName),
             }),
             new WebpackAssetsManifest({
                 output: `${buildPath}/server-asset-manifest.json`,
@@ -477,7 +478,7 @@ function clientConfig(p = {}) {
                                         resolvePath: function(...mrProps) {
                                             return moduleResolverResolvePath(mrProps, {...rest, target:"browser"})
                                         },
-                                        loglevel: "warn"
+                                        loglevel: "verbose"
                                     }
                                 ]
                             ]
@@ -549,7 +550,8 @@ function clientConfig(p = {}) {
                 "DEV": JSON.stringify(isDev),
                 "RUN": JSON.stringify(packageName),
                 "WAPP": JSON.stringify(buildHash),
-                "TYPE": JSON.stringify(isStartScript ? "start" : "build")
+                "TYPE": JSON.stringify(isStartScript ? "start" : "build"),
+                "NAME": JSON.stringify(packageName),
             }),
             new WebpackAssetsManifest({
                 output: `${buildPath}/asset-manifest.json`,

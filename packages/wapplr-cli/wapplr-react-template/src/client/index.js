@@ -60,7 +60,8 @@ const defaultConfig = {
             WAPP: (typeof WAPP !== "undefined") ? WAPP : undefined,
             RUN: (typeof RUN !== "undefined") ? RUN : undefined,
             TYPE: (typeof TYPE !== "undefined") ? TYPE : undefined,
-            ROOT: (typeof ROOT !== "undefined") ? ROOT : "/"
+            ROOT: (typeof ROOT !== "undefined") ? ROOT : "/",
+            NAME: (typeof NAME !== "undefined") ? NAME : undefined,
         }
     }
 };

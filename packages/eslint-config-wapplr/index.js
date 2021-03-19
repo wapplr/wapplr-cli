@@ -35,7 +35,8 @@ module.exports = {
         RUN: "readonly",
         DEV: "readonly",
         TYPE: "readonly",
-        ROOT: "readonly"
+        ROOT: "readonly",
+        NAME: "readonly"
     },
 
     overrides: [
