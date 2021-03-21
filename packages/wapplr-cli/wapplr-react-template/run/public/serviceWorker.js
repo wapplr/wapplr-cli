@@ -44,7 +44,7 @@ function installListener(event) {
             try {
                 await cache.add(myOfflineUrl);
             } catch (e){
-                console.error("[PWA] Failed to cache offline page:", myOfflineUrl, e);
+                console.log("[PWA] Failed to cache offline page:", myOfflineUrl, e);
             }
         })()
     );
