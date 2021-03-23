@@ -68,6 +68,10 @@ const defaultConfig = {
 
 export async function run(p = defaultConfig) {
 
+    if (p?.config?.globals && !p.config.globals.RUN){
+        p.config.globals.RUN = p.config?.globals.NAME || "wapplr-template"
+    }
+
     const {config} = getConfig(p);
     const wapp = await createClient({...p, config });
 
