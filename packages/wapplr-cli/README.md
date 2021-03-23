@@ -68,7 +68,7 @@ npx wapplr-cli clean
 
 # wapplr.json
 
-All commands creates the descriptive file, what contain those properties. It is needed to wapplr-cli can recognize the Wapplr packages.
+All commands create the descriptive file, what contain those properties. It is needed to wapplr-cli can recognize the Wapplr packages.
 ```json
 {
     "time": "2021-01-01T00:00:00.488Z",
