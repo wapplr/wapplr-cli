@@ -27,10 +27,21 @@ module.exports = async function webpack(p = {}) {
         });
 
         try {
-            const overrides = require(path.resolve(rootPath, "webpack-config-override.js"))({compiler, config, options});
-            config = overrides.config;
-            compiler = overrides.compiler;
-        } catch(e) {}
+            let overrides;
+            try {
+                overrides = require(path.resolve(rootPath, "webpack-config-override.js"))({
+                    compiler,
+                    config,
+                    options
+                });
+            } catch (e){}
+            if (overrides) {
+                config = overrides.config;
+                compiler = overrides.compiler;
+            }
+        } catch(e) {
+            console.log(e);
+        }
 
         if (runOrReturn === "return"){
             return resolve({compiler, config});
