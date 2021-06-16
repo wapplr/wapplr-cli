@@ -65,11 +65,14 @@ async function devServer(p = {}) {
     const serverConfig = config.find(config => config.name === "server");
 
     const multiCompiler = compiler;
-    const clientCompiler = multiCompiler.compilers.find(function(compiler) { return compiler.name === "client"; });
-    const serverCompiler = multiCompiler.compilers.find(function(compiler) { return compiler.name === "server"; });
+    const clientCompiler = multiCompiler.compilers.find((compiler) => compiler.name === "client");
+    const serverCompiler = multiCompiler.compilers.find((compiler) => compiler.name === "server");
+
+    const otherClientConfigs = config.filter((config => (config.name !== "client" && config.name !== "server" && multiCompiler.compilers.find((compiler) => compiler.name === config.name ))));
 
     const serverPromise = createCompilationPromise("server", serverCompiler, serverConfig);
     const clientPromise = createCompilationPromise("client", clientCompiler, clientConfig);
+    const otherClientPromise = (otherClientConfigs.length) ? Promise.all([...otherClientConfigs.map((config, i)=> createCompilationPromise(config.name, multiCompiler.compilers.find((compiler) => compiler.name === config.name), config))]) : new Promise((resolve) => resolve() )
 
     let wapp;
     let app;
@@ -82,12 +85,28 @@ async function devServer(p = {}) {
     server.use(express.static(path.resolve(buildPath, "public")));
 
     server.use(webpackDevMiddleware(clientCompiler, {
-            publicPath: clientConfig.output.publicPath,
-            logLevel: "silent",
-            watchOptions,
-        }));
+        publicPath: clientConfig.output.publicPath,
+        logLevel: "silent",
+        watchOptions,
+    }));
 
     server.use(webpackHotMiddleware(clientCompiler, { log: false }));
+
+    if (otherClientConfigs.length){
+        otherClientConfigs.forEach((config) => {
+
+            const compiler = multiCompiler.compilers.find((compiler) => compiler.name === config.name);
+
+            server.use(webpackDevMiddleware(compiler, {
+                publicPath: config.output.publicPath,
+                logLevel: "silent",
+                watchOptions,
+            }));
+
+            server.use(webpackHotMiddleware(compiler, { log: false }));
+
+        })
+    }
 
     serverCompiler.hooks.compile.tap("server", function() {
         if (!appPromiseIsResolved) {
@@ -169,6 +188,7 @@ async function devServer(p = {}) {
 
     await clientPromise;
     await serverPromise;
+    await otherClientPromise;
 
     console.groupEnd();
 

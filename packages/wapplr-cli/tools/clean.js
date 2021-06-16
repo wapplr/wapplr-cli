@@ -97,6 +97,26 @@ async function cleanByPaths(p = {}) {
         fs.unlinkSync(path.resolve(buildPath, "chunk-manifest.json"))
     }
 
+    if (fs.existsSync(path.resolve(buildPath, "additional-asset-manifest.json"))){
+        const asset = require(path.resolve(buildPath, "additional-asset-manifest.json"));
+        Object.keys(asset).forEach(function (key){
+            if (fs.existsSync(path.join(buildPath, "public", asset[key]))){
+                consoleLog("Unlink file: " + path.join(buildPath, "public", asset[key]));
+                fs.unlinkSync(path.join(buildPath, "public", asset[key]))
+            }
+            if (fs.existsSync(path.join(buildPath, "public", asset[key]+".map"))){
+                consoleLog("Unlink file: " + path.join(buildPath, "public", asset[key]+".map"));
+                fs.unlinkSync(path.join(buildPath, "public", asset[key]+".map"))
+            }
+            if (fs.existsSync(path.join(buildPath, "public", asset[key]+".LICENSE.txt"))){
+                consoleLog("Unlink file: " + path.join(buildPath, "public", asset[key]+".LICENSE.txt"));
+                fs.unlinkSync(path.join(buildPath, "public", asset[key]+".LICENSE.txt"))
+            }
+        });
+        consoleLog("Unlink file: " + path.resolve(buildPath, "additional-asset-manifest.json"));
+        fs.unlinkSync(path.resolve(buildPath, "additional-asset-manifest.json"))
+    }
+
     if (fs.existsSync(path.resolve(buildPath, "updates"))) {
         consoleLog("Unlink folder: " + path.resolve(buildPath, "updates"));
         deleteFolderRecursiveSync(path.resolve(buildPath, "updates"));

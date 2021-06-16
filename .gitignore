@@ -1,6 +1,7 @@
 .idea/
 .vscode/
 node_modules/
+node_modules
 wip/
 dist
 !packages/babel-plugin-css-to-js-transform/dist
