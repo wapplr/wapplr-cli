@@ -102,6 +102,18 @@ module.exports = function (api, opts, env) {
                     loose: true,
                 },
             ],
+            [
+                require("@babel/plugin-proposal-private-methods").default,
+                {
+                    loose: true,
+                },
+            ],
+            [
+                require("@babel/plugin-proposal-private-property-in-object").default,
+                {
+                    loose: true,
+                },
+            ],
             require("@babel/plugin-syntax-dynamic-import"),
             require("@babel/plugin-proposal-numeric-separator").default,
             [
