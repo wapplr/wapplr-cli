@@ -11,7 +11,16 @@ module.exports = async function processCss(p = {}) {
     const options = getOptions(p);
     const {paths} = options;
     const {srcPath, distPath, rootPath} = paths;
-    await processCssFunction(async function processCss({runner}) {
+    await processCssFunction(async function processCss(processCssOptions) {
+
+        let overrides;
+        let runner = processCssOptions.runner;
+        try {
+            overrides = require(path.resolve(rootPath, "postcss-config-override.js"))(processCssOptions);
+        } catch (e){}
+        if (overrides?.runner) {
+            runner = overrides.runner;
+        }
 
         function recursiveReadDir(entriesPath, o = {}) {
             fs.readdirSync(entriesPath).forEach(function(file){
