@@ -20,7 +20,7 @@
         "imagemin-webp": "^6.0.0",
         "style-loader": "^2.0.0",
         "css-loader": "^5.0.1",
-        "postcss-loader": "^4.0.4",
+        "postcss-loader": "^6.2.1",
         "file-loader": "^6.2.0"
     },
     "engines": {
@@ -31,7 +31,7 @@
         "styleLoader.js",
         "webpackHotDevClient.js"
     ],
-    "version": "1.0.8",
+    "version": "1.0.9",
     "scripts": {},
     "repository": {
         "type": "git",

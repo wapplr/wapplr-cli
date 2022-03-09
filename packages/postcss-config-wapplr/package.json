@@ -3,14 +3,14 @@
     "description": "The default Postcss config for Wapplr structure",
     "license": "MIT",
     "dependencies": {
-        "postcss": "^8.2.1",
-        "postcss-import": "^13.0.0",
-        "postcss-calc": "^7.0.5",
+        "postcss": "^8.4.8",
+        "postcss-import": "^14.0.2",
+        "postcss-calc": "^8.2.4",
         "pleeease-filters": "^4.0.0",
         "pixrem": "^5.0.0",
-        "postcss-flexbugs-fixes":"^5.0.1",
-        "postcss-preset-env": "^6.7.0",
-        "cssnano": "^4.1.10"
+        "postcss-flexbugs-fixes":"^5.0.2",
+        "postcss-preset-env": "^7.4.2",
+        "cssnano": "^5.1.1"
     },
     "engines": {
         "node": ">=12.0.0"
@@ -19,7 +19,7 @@
         "index.js",
         "plugins.js"
     ],
-    "version": "1.0.4",
+    "version": "1.0.5",
     "scripts": {},
     "repository": {
         "type": "git",
