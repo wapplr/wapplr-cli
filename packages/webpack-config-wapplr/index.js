@@ -209,6 +209,7 @@ function serverConfig(p = {}) {
         mode: isDev ? "development" : "production",
         resolve: {
             modules: [
+                path.resolve(srcPath, "../node_modules"),
                 path.resolve(buildToolsPath, "../../src"),
                 path.resolve(buildToolsPath, "../"),
                 path.resolve(rootPath, "node_modules"),
@@ -434,6 +435,7 @@ function clientConfig(p = {}) {
         },
         resolve: {
             modules: [
+                path.resolve(srcPath, "../node_modules"),
                 path.resolve(buildToolsPath, "../../src"),
                 path.resolve(buildToolsPath, "../"),
                 path.resolve(rootPath, "node_modules"),
