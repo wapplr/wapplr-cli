@@ -12,6 +12,7 @@ const clean = require("../clean");
 const create = require("../create");
 const {createServiceWorker} = require("./serviceWorker");
 const wapplrJson = require("./wapplrJson");
+const fs = require("fs");
 
 let server;
 
@@ -203,6 +204,16 @@ async function devServer(p = {}) {
     const port = process.env.PORT ? Number(process.env.PORT) : undefined;
     const bs = browserSync.create();
 
+    let credentials = null;
+    const credentialsFolder = "secure/";
+    const dirname = path.resolve(buildPath);
+    if (fs.existsSync(path.resolve(dirname, credentialsFolder, "localhost.key"))  && fs.existsSync(path.resolve(dirname, credentialsFolder, "localhost.crt")) ){
+        credentials = {
+            key: path.resolve(dirname, credentialsFolder, "localhost.key"),
+            cert: path.resolve(dirname, credentialsFolder, "localhost.crt"),
+        }
+    }
+
     createServiceWorker(options);
 
     await new Promise(function(resolve, reject) {
@@ -212,6 +223,12 @@ async function devServer(p = {}) {
                 open: !process.argv.includes("--silent"),
                 ...(isDev ? {} : {notify: false, ui: false}),
                 ...(port ? {port} : null),
+                ...(credentials) ? {
+                    https: {
+                        key: credentials.key,
+                        cert: credentials.cert
+                    }
+                } : {}
             },
             (error, bs) => (error ? reject(error) : resolve(bs)),
         )
