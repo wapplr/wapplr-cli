@@ -158,6 +158,12 @@ function getStyleLoaders (p = {}) {
                     },
                 },
                 {
+                    loader: "sass-loader",
+                    options: {
+                        implementation: require("sass"),
+                    },
+                },
+                {
                     loader: require.resolve("postcss-loader"),
                     options: {
                         postcssOptions: {

@@ -21,7 +21,9 @@
         "style-loader": "^2.0.0",
         "css-loader": "^5.0.1",
         "postcss-loader": "^6.2.1",
-        "file-loader": "^6.2.0"
+        "file-loader": "^6.2.0",
+        "sass-loader": "^13.2.0",
+        "sass": "^1.58.3"
     },
     "engines": {
         "node": ">=12.0.0"
@@ -31,7 +33,7 @@
         "styleLoader.js",
         "webpackHotDevClient.js"
     ],
-    "version": "1.0.11",
+    "version": "1.0.13",
     "scripts": {},
     "repository": {
         "type": "git",
