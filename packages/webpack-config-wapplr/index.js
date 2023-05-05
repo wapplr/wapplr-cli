@@ -154,7 +154,7 @@ function getStyleLoaders (p = {}) {
                                 ? "[name]-[local]-[hash:base64:5]"
                                 : "[hash:base64:5]",
                         },
-                        url: (url) => !/^\/assets\//.test(url)
+                        url: (url) => !/^(.\/|\/)assets\//.test(url)
                     },
                 },
                 {
