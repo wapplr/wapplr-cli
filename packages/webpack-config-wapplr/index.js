@@ -7,6 +7,7 @@ const getPostCssPlugins = require("postcss-config-wapplr/plugins");
 const moduleResolver = require("babel-plugin-module-resolver");
 const terserPlugin = require("terser-webpack-plugin");
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
+const {pathToFileURL} = require("url");
 
 function getPackageJson(p = {}) {
     const {paths} = p;
@@ -175,9 +176,20 @@ function getStyleLoaders (p = {}) {
                     },
                 },
                 {
+                    include: [...includeExclude],
                     loader: "sass-loader",
                     options: {
-                        implementation: require("sass"),
+                        api: "modern",
+                        ...isStartScript ? {
+                            sassOptions: {
+                                importers: [{
+                                    findFileUrl(sourcePath) {
+                                        const r = resolvePathDistToSrc(sourcePath, rest);
+                                        return pathToFileURL(r)
+                                    }
+                                }]
+                            }
+                        } : {}
                     },
                 },
             ],
