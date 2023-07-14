@@ -43,7 +43,7 @@ module.exports = async function build(p = {}) {
 
     const babelPresetPath = (fs.existsSync(path.resolve(rootPath, "node_modules", "babel-preset-wapplr", "dist.js"))) ? '"' + path.resolve(rootPath, "node_modules", "babel-preset-wapplr", "dist.js") + '"' : "babel-preset-wapplr/dist";
 
-    const execText = babelPath + " " + srcPath + " --presets="+babelPresetPath+" --out-dir " + distPath + " --verbose";
+    const execText = babelPath + " " + srcPath + " --presets="+babelPresetPath+" --out-dir " + distPath + " --copy-files --verbose";
     console.log("\n[WCI]","Run babel: " + execText);
     const {stdout, stderr} = await util.promisify(cp.exec)(execText);
 

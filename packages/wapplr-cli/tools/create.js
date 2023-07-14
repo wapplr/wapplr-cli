@@ -5,7 +5,8 @@ const util = require("util");
 
 const {
     getOptions,
-    copyFolderRecursiveSync
+    copyFolderRecursiveSync,
+    copyFileSync
 } = require("./utils");
 
 const {createManifest} = require("./utils/serviceWorker");
@@ -225,6 +226,14 @@ module.exports = async function create(p = {}) {
                                 const {devDependencies, ...rest} = json;
                                 const newJson = {...rest};
                                 fs.writeFileSync(path.resolve(runPackagesPath, packageName, "package.json"), JSON.stringify(newJson, null, "  "))
+                            }
+
+                            if (fs.existsSync(path.resolve(modulePath, "README.md"))) {
+                                copyFileSync(path.resolve(modulePath, "README.md"), path.resolve(runPackagesPath, packageName));
+                            }
+
+                            if (fs.existsSync(path.resolve(modulePath, "LICENSE.txt"))) {
+                                copyFileSync(path.resolve(modulePath, "LICENSE.txt"), path.resolve(runPackagesPath, packageName));
                             }
 
                         }
