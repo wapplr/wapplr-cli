@@ -70,6 +70,32 @@ function resolvePathDistToSrc(sourcePath, options) {
 
 }
 
+function resolvePathDist(sourcePath, options) {
+
+    const siblingAliases = getSiblingAliases({...options, enablePackageName: true});
+
+    let foundPath = null;
+
+    Object.keys(siblingAliases).forEach(function (packageName) {
+
+        const wapplrJson = siblingAliases[packageName];
+        const distRelativeFromParent = path.relative(wapplrJson.paths.rootPath, wapplrJson.paths.distPath);
+        const search = packageName + "/" + distRelativeFromParent;
+
+        if (sourcePath.startsWith(search)) {
+            foundPath = path.resolve(path.join(wapplrJson.paths.distPath, sourcePath.slice(search.length)))
+        }
+
+    });
+
+    if (foundPath){
+        return foundPath;
+    }
+
+    return sourcePath;
+
+}
+
 function moduleResolverResolvePath(mrProps = [], options = {}) {
 
     const [sourcePath] = mrProps;
@@ -105,8 +131,8 @@ function moduleResolverResolvePath(mrProps = [], options = {}) {
 
 function getStyleLoaders (p = {}) {
 
-    const {mode = "development", packageJson, ...rest} = p;
-    const {paths, runScript} = rest;
+    const { mode = "development", packageJson, ...rest } = p;
+    const { paths, runScript } = rest;
 
     const {
         rootPath,
@@ -117,15 +143,61 @@ function getStyleLoaders (p = {}) {
     const isDev = (isStartScript || !isProd);
 
     const enableStyleLoaders = true;
-    const reStyle = /\.(css|less|styl|scss|sass|sss)$/;
+    const reStyle = /\.(css|scss|sass)$/;
 
     const siblingAliases = getSiblingAliases(rest);
 
     const includeExclude = [path.resolve(rootPath),
         ...(isStartScript && siblingAliases && Object.keys(siblingAliases).length) ?
-            Object.keys(siblingAliases).map(function (key){ return path.resolve(siblingAliases[key].paths.rootPath) })
+            Object.keys(siblingAliases).map(function(key) {
+                return path.resolve(siblingAliases[key].paths.rootPath)
+            })
             : []
     ];
+
+    const postCssLoader = {
+        loader: require.resolve("postcss-loader"),
+        options: {
+            postcssOptions: {
+                plugins: [
+                    ...getPostCssPlugins((isStartScript) ? {
+                        postcssImport: {
+                            resolve: function(sourcePath) {
+                                return resolvePathDistToSrc(sourcePath, rest);
+                            }
+                        }
+                    } : {})
+                ],
+
+            },
+        },
+    };
+
+    const sassLoader = {
+        loader: "sass-loader",
+        options: {
+            api: "modern",
+            ...isStartScript ? {
+                sassOptions: {
+                    importers: [{
+                        findFileUrl(sourcePath) {
+                            const r = resolvePathDistToSrc(sourcePath, rest);
+                            return pathToFileURL(r)
+                        }
+                    }]
+                }
+            } : {
+                sassOptions: {
+                    importers: [{
+                        findFileUrl(sourcePath) {
+                            const r = resolvePathDist(sourcePath, rest);
+                            return pathToFileURL(r)
+                        }
+                    }],
+                }
+            }
+        },
+    };
 
     return (!enableStyleLoaders) ? [] : [
         {
@@ -158,40 +230,8 @@ function getStyleLoaders (p = {}) {
                         url: (url) => !/^(.\/|\/)assets\//.test(url)
                     },
                 },
-                {
-                    loader: require.resolve("postcss-loader"),
-                    options: {
-                        postcssOptions: {
-                            plugins: [
-                                ...getPostCssPlugins((isStartScript) ? {
-                                    postcssImport: {
-                                        resolve: function (sourcePath) {
-                                            return resolvePathDistToSrc(sourcePath, rest);
-                                        }
-                                    }
-                                } : {})
-                            ],
-
-                        },
-                    },
-                },
-                {
-                    include: [...includeExclude],
-                    loader: "sass-loader",
-                    options: {
-                        api: "modern",
-                        ...isStartScript ? {
-                            sassOptions: {
-                                importers: [{
-                                    findFileUrl(sourcePath) {
-                                        const r = resolvePathDistToSrc(sourcePath, rest);
-                                        return pathToFileURL(r)
-                                    }
-                                }]
-                            }
-                        } : {}
-                    },
-                },
+                postCssLoader,
+                sassLoader
             ],
             sideEffects: true,
         },
@@ -248,6 +288,7 @@ function serverConfig(p = {}) {
             reasons: isDev,
             timings: true,
             version: false,
+            loggingDebug: ['sass-loader']
         },
         devtool: isDev ? "inline-cheap-module-source-map" : "source-map",
 
@@ -315,6 +356,11 @@ function serverConfig(p = {}) {
                 },
                 ...getStyleLoaders(p),
                 {
+                    include: [rootPath, ...Object.keys(siblingAliases).map(function (key){ return siblingAliases[key].paths.rootPath })],
+                    test: /\.md$/,
+                    type: 'asset/source',
+                },
+                {
                     test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
                     use: [
                         {
@@ -352,6 +398,10 @@ function serverConfig(p = {}) {
                         path.resolve(buildToolsPath, "../../src"),
                         path.resolve(rootPath, "node_modules")
                     ],
+                    allowlist: [
+                        /\.md$/,
+                        /\.(css|scss|sass)$/
+                    ]
                 }
             ),
         ],
@@ -508,6 +558,11 @@ function clientConfig(p = {}) {
                 },
                 ...getStyleLoaders(p),
                 {
+                    include: [rootPath, ...Object.keys(siblingAliases).map(function (key){ return siblingAliases[key].paths.rootPath })],
+                    test: /\.md$/,
+                    type: 'asset/source',
+                },
+                {
                     test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
                     use: [
                         {
@@ -543,7 +598,8 @@ function clientConfig(p = {}) {
             modules: false,
             reasons: isDev,
             timings: true,
-            version: false
+            version: false,
+            loggingDebug: ['sass-loader']
         },
         devtool: isDev ? "inline-cheap-module-source-map" : "source-map",
         name: "client",
