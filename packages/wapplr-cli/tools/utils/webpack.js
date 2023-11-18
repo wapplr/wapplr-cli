@@ -32,7 +32,8 @@ module.exports = async function webpack(p = {}) {
                 overrides = require(path.resolve(rootPath, "webpack-config-override.js"))({
                     compiler,
                     config,
-                    options
+                    options,
+                    mode
                 });
             } catch (e){}
             if (overrides) {

@@ -21,8 +21,10 @@ module.exports = async function build(p = {}) {
 
     const {disableClean, disableCreate, ...rest} = p;
     const options = getOptions(rest, "build");
-    const {paths} = options;
+    const {paths, argv} = options;
     const {rootPath, buildToolsPath, distPath, srcPath} = paths;
+
+    const disableDist = argv.indexOf("--disable-dist") > -1;
 
     if (!disableClean){
         await clean(options);
@@ -33,34 +35,39 @@ module.exports = async function build(p = {}) {
     }
 
     await webpack({...options, mode:"production"});
-    await delay(2000);
-    await createServiceWorker(options);
-    await processCss(options);
 
-    const babelPath = (fs.existsSync(path.resolve(buildToolsPath, "../.bin/babel"))) ? '"' + path.resolve(buildToolsPath, "../.bin/babel") + '"' :
-        (fs.existsSync(path.resolve(buildToolsPath, "./node_modules/.bin/babel"))) ? '"' + path.resolve(buildToolsPath, "./node_modules/.bin/babel") + '"' :
-            (fs.existsSync(path.resolve(rootPath, "./node_modules/.bin/babel"))) ? '"' + path.resolve(rootPath, "./node_modules/.bin/babel") + '"' : "babel";
+    if (!disableDist) {
 
-    const babelPresetPath = (fs.existsSync(path.resolve(rootPath, "node_modules", "babel-preset-wapplr", "dist.js"))) ? '"' + path.resolve(rootPath, "node_modules", "babel-preset-wapplr", "dist.js") + '"' : "babel-preset-wapplr/dist";
+        await delay(2000);
+        await createServiceWorker(options);
+        await processCss(options);
 
-    const execText = babelPath + " " + srcPath + " --presets="+babelPresetPath+" --out-dir " + distPath + " --copy-files --verbose";
-    console.log("\n[WCI]","Run babel: " + execText);
-    const {stdout, stderr} = await util.promisify(cp.exec)(execText);
+        const babelPath = (fs.existsSync(path.resolve(buildToolsPath, "../.bin/babel"))) ? '"' + path.resolve(buildToolsPath, "../.bin/babel") + '"' :
+            (fs.existsSync(path.resolve(buildToolsPath, "./node_modules/.bin/babel"))) ? '"' + path.resolve(buildToolsPath, "./node_modules/.bin/babel") + '"' :
+                (fs.existsSync(path.resolve(rootPath, "./node_modules/.bin/babel"))) ? '"' + path.resolve(rootPath, "./node_modules/.bin/babel") + '"' : "babel";
 
-    console.group("\n[BABEL]");
-    if (stdout) {
-        console.log(stdout);
+        const babelPresetPath = (fs.existsSync(path.resolve(rootPath, "node_modules", "babel-preset-wapplr", "dist.js"))) ? '"' + path.resolve(rootPath, "node_modules", "babel-preset-wapplr", "dist.js") + '"' : "babel-preset-wapplr/dist";
+
+        const execText = babelPath + " " + srcPath + " --presets=" + babelPresetPath + " --out-dir " + distPath + " --copy-files --verbose";
+        console.log("\n[WCI]", "Run babel: " + execText);
+        const {stdout, stderr} = await util.promisify(cp.exec)(execText);
+
+        console.group("\n[BABEL]");
+        if (stdout) {
+            console.log(stdout);
+        }
+        if (stderr) {
+            console.error(stderr)
+        }
+        console.groupEnd();
+
+        const packageJson = (fs.existsSync(path.resolve(rootPath, "package.json"))) ? require(path.resolve(rootPath, "package.json")) : {};
+        packageJson.main = path.join(path.relative(rootPath, path.resolve(distPath)), "server").split(path.sep).join("/").replace("./", "");
+        packageJson.browser = path.join(path.relative(rootPath, path.resolve(distPath)), "client").split(path.sep).join("/").replace("./", "");
+        packageJson.files = [path.relative(rootPath, path.resolve(distPath)) + "/*"];
+        fs.writeFileSync(path.resolve(rootPath, "package.json"), JSON.stringify(packageJson, null, "    "));
+
     }
-    if (stderr) {
-        console.error(stderr)
-    }
-    console.groupEnd();
-
-    const packageJson = (fs.existsSync(path.resolve(rootPath, "package.json"))) ? require(path.resolve(rootPath, "package.json")) : {};
-    packageJson.main = path.join(path.relative(rootPath, path.resolve(distPath)), "server").split(path.sep).join("/").replace("./", "");
-    packageJson.browser = path.join(path.relative(rootPath, path.resolve(distPath)), "client").split(path.sep).join("/").replace("./", "");
-    packageJson.files = [path.relative(rootPath, path.resolve(distPath)) + "/*"];
-    fs.writeFileSync(path.resolve(rootPath, "package.json"), JSON.stringify(packageJson, null, "    "));
 
     await wapplrJson(options);
 
