@@ -36,10 +36,11 @@ module.exports = async function build(p = {}) {
 
     await webpack({...options, mode:"production"});
 
+    await delay(2000);
+    createServiceWorker(options);
+
     if (!disableDist) {
 
-        await delay(2000);
-        await createServiceWorker(options);
         await processCss(options);
 
         const babelPath = (fs.existsSync(path.resolve(buildToolsPath, "../.bin/babel"))) ? '"' + path.resolve(buildToolsPath, "../.bin/babel") + '"' :

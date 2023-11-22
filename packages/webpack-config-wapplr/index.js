@@ -432,6 +432,38 @@ function serverConfig(p = {}) {
                     if (key.toLowerCase().endsWith(".map")) {return false;}
                     return { key, value };
                 },
+                done: function(manifest, stats) {
+                    const chunkFileName = `${buildPath}/server-chunk-manifest.json`;
+                    try {
+                        const fileFilter = function (file) {
+                            const assetMetaInformation = stats.compilation.getAsset(file).info || {};
+                            return !(assetMetaInformation.hotModuleReplacement || file.endsWith("hot-update.js") || file.endsWith(".map"));
+                        };
+                        const addPath = function(file){ return file };
+                        const chunkFiles = stats.compilation.chunkGroups.reduce(function(acc, c) {
+                            acc[c.name] = [
+                                ...(acc[c.name] || []),
+                                ...c.chunks.reduce(
+                                    function(files, cc) {
+                                        const ccFiles = [...cc.files];
+                                        return [
+                                            ...files,
+                                            ...ccFiles.filter(fileFilter).map(addPath),
+                                        ]
+                                    },
+                                    [],
+                                ),
+                            ];
+                            return acc;
+                        }, Object.create(null));
+                        fs.writeFileSync(chunkFileName, JSON.stringify(chunkFiles, null, 2));
+                    } catch (err) {
+                        console.error("[WAPPLR]",`ERROR: Cannot write ${chunkFileName}: `, err);
+                        if (!isDev) {
+                            process.exit(1);
+                        }
+                    }
+                },
             }),
             new webpack.BannerPlugin({
                 banner: "require('source-map-support').install();",

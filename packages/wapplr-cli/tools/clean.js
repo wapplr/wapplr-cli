@@ -26,21 +26,30 @@ async function cleanByPaths(p = {}) {
     if (!fs.existsSync(buildPath)){
         fs.mkdirSync(buildPath, { recursive: true });
     }
+
     if (fs.existsSync(path.resolve(buildPath, "server.js"))){
         fs.unlinkSync(path.resolve(buildPath, "server.js"))
     }
+
     if (fs.existsSync(path.resolve(buildPath, "server.js.map"))){
         fs.unlinkSync(path.resolve(buildPath, "server.js.map"))
     }
+
     if (fs.existsSync(path.resolve(buildPath, "server.js.LICENSE.txt"))){
         fs.unlinkSync(path.resolve(buildPath, "server.js.LICENSE.txt"))
     }
+
+    const dirs = [];
+
     if (fs.existsSync(path.resolve(buildPath, "asset-manifest.json"))){
         const asset = require(path.resolve(buildPath, "asset-manifest.json"));
         Object.keys(asset).forEach(function (key){
             if (fs.existsSync(path.join(buildPath, "public", asset[key]))){
                 consoleLog("Unlink file: " + path.join(buildPath, "public", asset[key]));
-                fs.unlinkSync(path.join(buildPath, "public", asset[key]))
+                fs.unlinkSync(path.join(buildPath, "public", asset[key]));
+                if (dirs.indexOf(path.dirname(path.join(buildPath, "public", asset[key]))) === -1) {
+                    dirs.push(path.dirname(path.join(buildPath, "public", asset[key])))
+                }
             }
             if (fs.existsSync(path.join(buildPath, "public", asset[key]+".map"))){
                 consoleLog("Unlink file: " + path.join(buildPath, "public", asset[key]+".map"));
@@ -60,7 +69,10 @@ async function cleanByPaths(p = {}) {
         Object.keys(asset).forEach(function (key){
             if (fs.existsSync(path.join(buildPath,  asset[key]))){
                 consoleLog("Unlink file: " + path.join(buildPath,  asset[key]));
-                fs.unlinkSync(path.join(buildPath,  asset[key]))
+                fs.unlinkSync(path.join(buildPath,  asset[key]));
+                if (dirs.indexOf(path.dirname(path.join(buildPath, asset[key]))) === -1) {
+                    dirs.push(path.dirname(path.join(buildPath, asset[key])))
+                }
             }
             if (fs.existsSync(path.join(buildPath,  asset[key]+".map"))){
                 consoleLog("Unlink file: " + path.join(buildPath,  asset[key]+".map"));
@@ -77,24 +89,58 @@ async function cleanByPaths(p = {}) {
 
     if (fs.existsSync(path.resolve(buildPath, "chunk-manifest.json"))) {
         const chunk = require(path.resolve(buildPath, "chunk-manifest.json"));
-        if (chunk.client){
-            chunk.client.forEach(function (fileName){
-                if (fs.existsSync(path.join(buildPath, "public", fileName))){
-                    consoleLog("Unlink file: " + path.join(buildPath, "public", fileName));
-                    fs.unlinkSync(path.join(buildPath, "public", fileName))
-                }
-                if (fs.existsSync(path.join(buildPath, "public", fileName+".map"))){
-                    consoleLog("Unlink file: " + path.join(buildPath, "public", fileName+".map"));
-                    fs.unlinkSync(path.join(buildPath, "public", fileName+".map"))
-                }
-                if (fs.existsSync(path.join(buildPath, "public", fileName+".LICENSE.txt"))){
-                    consoleLog("Unlink file: " + path.join(buildPath, "public", fileName+".LICENSE.txt"));
-                    fs.unlinkSync(path.join(buildPath, "public", fileName+".LICENSE.txt"))
-                }
-            })
-        }
+        const keys = Object.keys(chunk);
+        keys.forEach((key)=>{
+            if (chunk[key]){
+                chunk[key].forEach(function (fileName){
+                    if (fs.existsSync(path.join(buildPath, "public", fileName))){
+                        consoleLog("Unlink file: " + path.join(buildPath, "public", fileName));
+                        fs.unlinkSync(path.join(buildPath, "public", fileName));
+                        if (dirs.indexOf(path.dirname(path.join(buildPath, "public", fileName))) === -1) {
+                            dirs.push(path.dirname(path.join(buildPath, "public", fileName)))
+                        }
+                    }
+                    if (fs.existsSync(path.join(buildPath, "public", fileName+".map"))){
+                        consoleLog("Unlink file: " + path.join(buildPath, "public", fileName+".map"));
+                        fs.unlinkSync(path.join(buildPath, "public", fileName+".map"))
+                    }
+                    if (fs.existsSync(path.join(buildPath, "public", fileName+".LICENSE.txt"))){
+                        consoleLog("Unlink file: " + path.join(buildPath, "public", fileName+".LICENSE.txt"));
+                        fs.unlinkSync(path.join(buildPath, "public", fileName+".LICENSE.txt"))
+                    }
+                })
+            }
+        });
         consoleLog("Unlink file: " + path.resolve(buildPath, "chunk-manifest.json"));
         fs.unlinkSync(path.resolve(buildPath, "chunk-manifest.json"))
+    }
+
+    if (fs.existsSync(path.resolve(buildPath, "server-chunk-manifest.json"))) {
+        const chunk = require(path.resolve(buildPath, "server-chunk-manifest.json"));
+        const keys = Object.keys(chunk);
+        keys.forEach((key)=>{
+            if (chunk[key]){
+                chunk[key].forEach(function (fileName){
+                    if (fs.existsSync(path.join(buildPath, fileName))){
+                        consoleLog("Unlink file: " + path.join(buildPath, fileName));
+                        fs.unlinkSync(path.join(buildPath, fileName));
+                        if (dirs.indexOf(path.dirname(path.join(buildPath, fileName))) === -1) {
+                            dirs.push(path.dirname(path.join(buildPath, fileName)))
+                        }
+                    }
+                    if (fs.existsSync(path.join(buildPath, fileName+".map"))){
+                        consoleLog("Unlink file: " + path.join(buildPath, fileName+".map"));
+                        fs.unlinkSync(path.join(buildPath, fileName+".map"))
+                    }
+                    if (fs.existsSync(path.join(buildPath, fileName+".LICENSE.txt"))){
+                        consoleLog("Unlink file: " + path.join(buildPath, fileName+".LICENSE.txt"));
+                        fs.unlinkSync(path.join(buildPath, fileName+".LICENSE.txt"))
+                    }
+                })
+            }
+        });
+        consoleLog("Unlink file: " + path.resolve(buildPath, "server-chunk-manifest.json"));
+        fs.unlinkSync(path.resolve(buildPath, "server-chunk-manifest.json"))
     }
 
     if (fs.existsSync(path.resolve(buildPath, "additional-asset-manifest.json"))){
@@ -102,7 +148,10 @@ async function cleanByPaths(p = {}) {
         Object.keys(asset).forEach(function (key){
             if (fs.existsSync(path.join(buildPath, "public", asset[key]))){
                 consoleLog("Unlink file: " + path.join(buildPath, "public", asset[key]));
-                fs.unlinkSync(path.join(buildPath, "public", asset[key]))
+                fs.unlinkSync(path.join(buildPath, "public", asset[key]));
+                if (dirs.indexOf(path.dirname(path.join(buildPath, "public", asset[key]))) === -1) {
+                    dirs.push(path.dirname(path.join(buildPath, "public", asset[key])))
+                }
             }
             if (fs.existsSync(path.join(buildPath, "public", asset[key]+".map"))){
                 consoleLog("Unlink file: " + path.join(buildPath, "public", asset[key]+".map"));
@@ -186,6 +235,12 @@ async function cleanByPaths(p = {}) {
 
     if (fs.existsSync(path.resolve(buildPath, "package.json"))){
         fs.unlinkSync(path.resolve(buildPath, "package.json"))
+    }
+
+    if (dirs.length) {
+        dirs.sort().reverse().forEach((dir) => {
+            deleteFolderIfEmptySync(dir);
+        });
     }
 
     deleteFolderIfEmptySync(path.resolve(buildPath, "public", "assets"));
