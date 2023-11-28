@@ -39,7 +39,7 @@ function installListener(event) {
             try {
                 await cache.addAll(files);
             } catch (e){
-                console.error("[PWA] Failed to cache", e);
+                console.log("[PWA] Failed to cache", e);
             }
             try {
                 await cache.add(myOfflineUrl);
