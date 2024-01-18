@@ -108,7 +108,7 @@ function createManifest(p = {}) {
 function createServiceWorker(p = {}) {
 
     const options = getOptions(p);
-    const {paths} = options;
+    const {paths, buildHash} = options;
     const {templatePath, buildPath} = paths;
 
     if (p.return !== "string"){
@@ -151,26 +151,35 @@ function createServiceWorker(p = {}) {
         }
     } catch (e){}
 
-    if (existsOverRides){
+    if (existsOverRides) {
         // noinspection RegExpRedundantEscape
         existsServiceWorker = existsServiceWorker.replace(/(\/\*overridesStart \[\*\/)([\S\s]*?)(\/\*\] overridesEnd\*\/)/, ""+existsOverRides+"");
     }
 
     let bundleFiles = [];
     try {
-        bundleFiles = require(path.resolve(buildPath, "chunk-manifest.json")).client
-    } catch (e){}
-
-    let hash = Date.now();
-    try {
-        hash = bundleFiles[bundleFiles.length - 1].split("/").slice(-1)[0].split(".").slice(1, -1)[0];
-        if (!hash) {
-            hash = bundleFiles[bundleFiles.length - 1].split("/").slice(-1)[0].split(".")[0];
+        const assets = JSON.parse(fs.readFileSync(path.resolve(buildPath, "asset-manifest.json"), 'utf8'));
+        Object.keys(assets).forEach((key)=>{
+            bundleFiles.push(assets[key])
+        });
+        if (fs.existsSync(path.resolve(buildPath, "chunk-manifest.json"))) {
+            const chunks = JSON.parse(fs.readFileSync(path.resolve(buildPath, "chunk-manifest.json"), 'utf8'));
+            Object.keys(chunks).forEach((name)=>{
+                const array = chunks[name];
+                array.forEach((file)=>{
+                    if (bundleFiles.indexOf(file) === -1) {
+                        bundleFiles.push(file)
+                    }
+                })
+            })
         }
-    } catch (e){}
+    } catch (e) {
+        console.log(e)
+    }
+
     // noinspection RegExpRedundantEscape
     existsServiceWorker = existsServiceWorker.replace(/(\/\*cacheName \[\*\/)(.*?)(\/\*\]\*\/)/,
-        '$1const cacheName = "'+hash+'"$3');
+        '$1const cacheName = "'+buildHash+'"$3');
 
     // noinspection RegExpRedundantEscape
     existsServiceWorker = existsServiceWorker.replace(/(\/\*bundleFiles \[\*\/)(.*?)(\/\*\]\*\/)/,

@@ -8,7 +8,13 @@ const myFiles = [];
  * Add your offline url"
  * */
 
-const myOfflineUrl = "offline";
+const myOfflineUrl = "/offline";
+
+/**
+ * Add your urls to myUrls array"
+ * */
+
+const myUrls = [];
 
 /*contentStart [*/
 /**
@@ -32,6 +38,8 @@ const myOfflineUrl = "offline";
 
 const files = [...bundleFiles, ...myFiles];
 
+const urls = [...myUrls];
+
 function installListener(event) {
     event.waitUntil(
         (async () => {
@@ -39,10 +47,16 @@ function installListener(event) {
             try {
                 await cache.addAll(files);
             } catch (e){
-                console.error("[PWA] Failed to cache", e);
+                console.log("[PWA] Failed to cache", e);
             }
             try {
-                await cache.add(myOfflineUrl);
+
+                const request = new Request(myOfflineUrl, {
+                    mode: 'cors',
+                    credentials: 'omit'
+                });
+
+                await cache.add(request);
             } catch (e){
                 console.log("[PWA] Failed to cache offline page:", myOfflineUrl, e);
             }
@@ -79,7 +93,7 @@ function fetchListener(event) {
         return false;
     }
 
-    if (event.request.mode === "navigate") {
+    if (event.request.mode === "navigate" || event.request.mode === "no-cors") {
         event.respondWith(
 
             /**
@@ -102,15 +116,25 @@ function fetchListener(event) {
                     let networkResponse;
                     let networkError;
                     try {
-                        networkResponse = await fetch(request);
+
+                        const newRequest = new Request(event.request, {
+                            mode: 'cors',
+                            credentials: 'omit'
+                        });
+
+                        networkResponse = await fetch(newRequest);
+
                     } catch (e){
                         networkError = e;
                         console.log("[PWA] Network fetch failed, it is now trying load it from cache:", request.url, e.message);
                     }
                     if (networkResponse){
                         try {
-                            const responseToCache = networkResponse.clone();
-                            await cache.put(request, responseToCache)
+                            const url = new URL(request.url);
+                            if (urls.indexOf(url.pathname) > -1 || files.indexOf(url.pathname) > -1) {
+                                const responseToCache = networkResponse.clone();
+                                await cache.put(request, responseToCache)
+                            }
                         } catch (e){
                             console.log("[PWA] The response could not be saved:", request.url, e.message);
                         }
