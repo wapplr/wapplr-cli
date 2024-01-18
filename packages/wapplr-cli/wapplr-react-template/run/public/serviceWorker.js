@@ -124,7 +124,12 @@ function fetchListener(event) {
                     if (networkResponse){
                         try {
                             const url = new URL(request.url);
-                            if (urls.indexOf(url.pathname) > -1 || files.indexOf(url.pathname) > -1) {
+                            if (
+                                urls.indexOf(url.pathname) > -1 ||
+                                files.indexOf(url.pathname) > -1 ||
+                                event.request.destination === 'image' ||
+                                event.request.destination === 'font'
+                            ) {
                                 const responseToCache = networkResponse.clone();
                                 await cache.put(request, responseToCache)
                             }
