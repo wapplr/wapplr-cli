@@ -141,6 +141,7 @@ function fetchListener(event) {
                     }
 
                     if (networkError){
+                        // noinspection ExceptionCaughtLocallyJS
                         throw networkError;
                     }
                     return networkResponse;
