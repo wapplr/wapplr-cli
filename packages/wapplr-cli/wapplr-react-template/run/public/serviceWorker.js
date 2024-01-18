@@ -116,14 +116,7 @@ function fetchListener(event) {
                     let networkResponse;
                     let networkError;
                     try {
-
-                        const newRequest = new Request(event.request, {
-                            mode: 'cors',
-                            credentials: 'omit'
-                        });
-
-                        networkResponse = await fetch(newRequest);
-
+                        networkResponse = await fetch(request);
                     } catch (e){
                         networkError = e;
                         console.log("[PWA] Network fetch failed, it is now trying load it from cache:", request.url, e.message);
